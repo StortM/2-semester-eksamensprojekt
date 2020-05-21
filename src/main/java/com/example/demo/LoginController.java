@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class HomeController {
+public class LoginController {
 
     @GetMapping("/")
     public String index(){
@@ -24,6 +24,6 @@ public class HomeController {
 
     @GetMapping("/login")
     public String login(){
-        return ("newLogin");
+        return ("login");
     }
 }

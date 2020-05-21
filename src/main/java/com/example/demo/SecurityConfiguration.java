@@ -42,8 +42,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //"ROLE_" som et prefix, når man specificerer roller i configure
                 // se https://stackoverflow.com/questions/33205236/spring-security-added-prefix-role-to-all-roles-name
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("ADMIN","USER")
-                .antMatchers("/").permitAll().and()
+                .antMatchers("/autocamper").hasAnyRole("SALG")
+                .antMatchers("/booking").hasAnyRole("SALG")
+                .antMatchers("/kunder").hasAnyRole("SALG")
+                .antMatchers("/*").permitAll().and()
             .formLogin()
                 .loginPage("/login")
                 .permitAll();
