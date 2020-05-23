@@ -31,11 +31,12 @@ public class DatabaseConnectionManager {
         try {
             FileInputStream propertyFile = new FileInputStream("src/main/resources/application.properties");
             prop.load(propertyFile);
-            this.user = prop.getProperty("db.user");
-            this.password = prop.getProperty("db.password");
-            this.url = prop.getProperty("db.url");
+            this.user = prop.getProperty("spring.datasource.username");
+            this.password = prop.getProperty("spring.datasource.password");
+            this.url = prop.getProperty("spring.datasource.url");
         }
         catch(FileNotFoundException e){
+
             System.out.println("File could not be found");
             e.printStackTrace();
         }

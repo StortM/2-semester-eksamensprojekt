@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,15 +37,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //autoriserer alle requests ved antMatchers, admin page til ADMIN rolle osv. osv.
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 //Selvom authorities er defineret some ROLE_**** og det ikke er nedenfor, så er dette stadigvæk korrekt, da Spring tilføjer
                 //"ROLE_" som et prefix, når man specificerer roller i configure
                 // se https://stackoverflow.com/questions/33205236/spring-security-added-prefix-role-to-all-roles-name
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/autocamper").hasAnyRole("SALG")
-                .antMatchers("/booking").hasAnyRole("SALG")
-                .antMatchers("/kunder").hasAnyRole("SALG")
-                .antMatchers("/*").permitAll().and()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/booking/**").permitAll().and()
+                /*
+                .antMatchers("/").hasAnyRole("SALG, ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/autocamper/**").hasAnyRole("SALG, ADMIN")
+                .antMatchers("/booking/**").hasAnyRole("SALG, ADMIN")
+                .antMatchers("/kunder/**").hasAnyRole("SALG, ADMIN")
+                .antMatchers("/login").permitAll().and()
+
+                 */
             .formLogin()
                 .loginPage("/login")
                 .permitAll();

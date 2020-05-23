@@ -101,7 +101,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
     }
 
     @Override
-    public List<AutocamperDTO> getAll() {
+    public List<AutocamperDTO> readAll() {
         List<AutocamperDTO> autocamperList = new ArrayList<>();
 
         try{
@@ -119,9 +119,9 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
                 autocamper.setModel(rs.getString(3));
                 autocamper.setYear(rs.getInt(4));
                 autocamper.setPrice_day(rs.getInt(5));
-                autocamper.setBeds(rs.getInt(6));
-                autocamper.setSeats(rs.getInt(7));
-                autocamper.setDescription(rs.getString(8));
+                autocamper.setBeds(rs.getInt(8));
+                autocamper.setSeats(rs.getInt(9));
+                autocamper.setDescription(rs.getString(10));
 
                 autocamperList.add(autocamper);
             }

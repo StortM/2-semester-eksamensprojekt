@@ -7,5 +7,5 @@ public interface CRUDRepository<T> {
      T read(int id);
      void update(T t);
      void delete(int id);
-     List<T> getAll();
+     List<T> readAll();
 }

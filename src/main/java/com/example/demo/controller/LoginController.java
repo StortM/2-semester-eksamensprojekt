@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,17 +9,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String index(){
-        return "index";
-    }
-
-    @GetMapping("/user")
-    public String user(){
-        return ("user");
-    }
-
-    @GetMapping("/admin")
-    public String admin(){
-        return ("admin");
+        return "home";
     }
 
     @GetMapping("/login")

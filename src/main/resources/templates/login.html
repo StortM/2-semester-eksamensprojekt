@@ -16,8 +16,25 @@
 </head>
 <body class="text-center">
 
+<div></div>
+
 <div class="container">
+
     <h1 class="h1 mb-10 font-weight-bold">Velkommen til Nordic Autocamper Rental</h1>
+
+<form th:action="@{/login}" method="post" class="form-signin">
+    <h1 class="h3 mb-3 font-weight-normal">Login nedenfor</h1>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Brugernavn" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+</form>
 
     <div th:if="${param.error}">
         Login fejlede prøv igen!
@@ -26,20 +43,6 @@
     <div th:if="${param.logout}">
         Du er nu logget ud
     </div>
-
-<form th:action="@{/login}" method="post" class="form-signin">
-    <h1 class="h3 mb-3 font-weight-normal">Login nedenfor</h1>
-    <label for="inputUsername" class="sr-only">Username</label>
-    <input type="text" id="inputUsername" class="form-control" placeholder="Brugernavn" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-</form>
 
 </div>
 </body>

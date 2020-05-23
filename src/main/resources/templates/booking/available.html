@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Opret Booking</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<nav th:insert="fragments/navbar.html :: navbar"></nav>
+
+<div class="container">
+    <div class="content">
+        <h1>Ledige autocampere</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Mærke</th>
+                <th>Model</th>
+                <th>Årgang</th>
+                <th>Senge</th>
+                <th>Siddepladser</th>
+                <th>Pris pr. dag</th>
+            </tr>
+            <tr th:each="autocamperDTO : ${autocampers}">
+                <td th:text="${autocamperDTO.getId()}"></td>
+                <td th:text="${autocamperDTO.getBrand()}"></td>
+                <td th:text="${autocamperDTO.getModel()}"></td>
+                <td th:text="${autocamperDTO.getYear()}"></td>
+                <td th:text="${autocamperDTO.getBeds()}"></td>
+                <td th:text="${autocamperDTO.getSeats()}"></td>
+                <td th:text="${autocamperDTO.getPrice_day()}"></td>
+                <td>
+                    <a href="" class="btn btn-success" role="button">Vælg</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script th:src="@{/js/bootstrap.min.js}" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>

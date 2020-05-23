@@ -13,15 +13,17 @@
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
-<nav class="site-header sticky-top py-1">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2 d-none d-md-inline-block" href="/home">Hjem</a>
-        <a class="py-2 d-none d-md-inline-block" href="/autocampere">Autocampere</a>
-        <a class="py-2 d-none d-md-inline-block" href="/booking">Booking</a>
-        <a class="py-2 d-none d-md-inline-block" href="/kunder">Kunder</a>
-    </div>
+<nav th:insert="fragments/navbar.html :: navbar"></nav>
 
-</nav>
+<div class="container">
+    <div class="content">
+    <h1>Header</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a sapien laoreet, posuere odio at, placerat eros. Cras a laoreet lorem, ac commodo tellus. Pellentesque vitae leo et nulla lacinia fringilla sit amet et leo. Suspendisse aliquam ornare nunc, in semper dolor rhoncus laoreet. Etiam hendrerit sapien nec pharetra pharetra. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla at nulla nec erat finibus fringilla id nec sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque sit amet risus at magna volutpat tempus in a enim. Donec suscipit, ligula vel vulputate varius, massa dolor sagittis neque, nec suscipit quam elit et justo. Nunc id tellus auctor, iaculis ipsum nec, auctor enim. Sed ullamcorper suscipit lacus. Cras viverra pellentesque condimentum. Fusce ac nunc aliquam, tincidunt neque sit amet, efficitur felis.
+
+        Pellentesque vitae consectetur magna, id malesuada ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam dignissim, tellus non maximus vulputate, orci orci scelerisque magna, in efficitur eros ligula et mi. In pharetra ut nibh vitae porttitor. Suspendisse sagittis lacus quam, et maximus mauris vulputate semper. Ut mollis blandit auctor. Maecenas sit amet ipsum ut augue dignissim maximus. Mauris pharetra turpis ut magna hendrerit scelerisque. Sed accumsan ligula nulla, sed fermentum ex suscipit a.</p>
+    </div>
+</div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
