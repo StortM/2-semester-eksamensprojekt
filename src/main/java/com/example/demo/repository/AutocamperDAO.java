@@ -35,7 +35,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
                 objectToReturn.setBrand(singleAutocamper.getString("autocamper_type_brand"));
                 objectToReturn.setModel(singleAutocamper.getString("autocamper_type_model"));
                 objectToReturn.setYear(singleAutocamper.getInt("year"));
-                objectToReturn.setPrice_day(singleAutocamper.getInt("price_day"));
+                objectToReturn.setPriceDay(singleAutocamper.getInt("price_day"));
                 objectToReturn.setBeds(singleAutocamper.getInt("beds"));
                 objectToReturn.setSeats(singleAutocamper.getInt("seats"));
                 objectToReturn.setDescription(singleAutocamper.getString("description"));
@@ -56,7 +56,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
             statementToInsert.setString(1, autocamperDTO.getBrand());
             statementToInsert.setString(2, autocamperDTO.getModel());
             statementToInsert.setInt(3, autocamperDTO.getYear());
-            statementToInsert.setInt(4, autocamperDTO.getPrice_day());
+            statementToInsert.setInt(4, autocamperDTO.getPriceDay());
             //Print for testing
             System.out.println(statementToInsert);
             statementToInsert.executeUpdate();
@@ -80,7 +80,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
             statementToInsert.setString(1, autocamperDTO.getBrand());
             statementToInsert.setString(2, autocamperDTO.getModel());
             statementToInsert.setInt(3, autocamperDTO.getYear());
-            statementToInsert.setInt(4, autocamperDTO.getPrice_day());
+            statementToInsert.setInt(4, autocamperDTO.getPriceDay());
             statementToInsert.setInt(5, autocamperDTO.getId());
 
             statementToInsert.executeUpdate();
@@ -120,7 +120,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
                 autocamper.setBrand(rs.getString(2));
                 autocamper.setModel(rs.getString(3));
                 autocamper.setYear(rs.getInt(4));
-                autocamper.setPrice_day(rs.getInt(5));
+                autocamper.setPriceDay(rs.getInt(5));
                 autocamper.setBeds(rs.getInt(8));
                 autocamper.setSeats(rs.getInt(9));
                 autocamper.setDescription(rs.getString(10));
@@ -138,7 +138,11 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
         Map<Integer, AutocamperDTO> autocamperMap = new TreeMap<>();
 
         try {
-            PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM autocampers");
+            PreparedStatement statementToQuery = conn.prepareStatement("select *\n" +
+                    "from autocampers\n" +
+                    "natural join autocamper_types\n" +
+                    "where autocampers.autocamper_type_brand = autocamper_types.brand and autocampers.autocamper_type_model = autocamper_types.model\n" +
+                    "ORDER BY id\n");
             ResultSet rs = statementToQuery.executeQuery();
 
             while(rs.next()) {
@@ -147,7 +151,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
                 autocamper.setBrand(rs.getString(2));
                 autocamper.setModel(rs.getString(3));
                 autocamper.setYear(rs.getInt(4));
-                autocamper.setPrice_day(rs.getInt(5));
+                autocamper.setPriceDay(rs.getInt(5));
                 autocamper.setBeds(rs.getInt(8));
                 autocamper.setSeats(rs.getInt(9));
                 autocamper.setDescription(rs.getString(10));

@@ -15,22 +15,27 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
         this.conn = conn;
     }
 
+    @Override
     public void create(BookingDTO bookingDTO) {
 
     }
 
+    @Override
     public BookingDTO read(int id) {
         return null;
     }
 
+    @Override
     public void update(BookingDTO bookingDTO) {
 
     }
 
+    @Override
     public void delete(int id) {
 
     }
 
+    @Override
     public List<BookingDTO> readAll() {
         List<BookingDTO> bookingsList = new ArrayList<>();
 

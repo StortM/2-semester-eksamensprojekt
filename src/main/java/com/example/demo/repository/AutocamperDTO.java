@@ -3,7 +3,7 @@ package com.example.demo.repository;
 public class AutocamperDTO{
     private int id;
     private int year;
-    private int price_day;
+    private int priceDay;
     private int beds;
     private int seats;
     private String description;
@@ -14,10 +14,10 @@ public class AutocamperDTO{
 
     }
 
-    public AutocamperDTO(int id, int year, int price_day, int beds, int seats, String description, String brand, String model) {
+    public AutocamperDTO(int id, int year, int priceDay, int beds, int seats, String description, String brand, String model) {
         this.id = id;
         this.year = year;
-        this.price_day = price_day;
+        this.priceDay = priceDay;
         this.beds = beds;
         this.seats = seats;
         this.description = description;
@@ -41,12 +41,12 @@ public class AutocamperDTO{
         this.year = year;
     }
 
-    public int getPrice_day() {
-        return price_day;
+    public int getPriceDay() {
+        return priceDay;
     }
 
-    public void setPrice_day(int price_day) {
-        this.price_day = price_day;
+    public void setPriceDay(int priceDay) {
+        this.priceDay = priceDay;
     }
 
     public int getBeds() {
@@ -94,7 +94,7 @@ public class AutocamperDTO{
         return "AutocamperDTO{" +
                 "id=" + id +
                 ", year=" + year +
-                ", price_day=" + price_day +
+                ", price_day=" + priceDay +
                 ", beds=" + beds +
                 ", seats=" + seats +
                 ", brand='" + brand + '\'' +

@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Controller
 public class BookingController {
@@ -32,28 +34,20 @@ public class BookingController {
 
     @PostMapping("/booking/available")
     public String bookingShowAvailable(@ModelAttribute BookingDTO bookingDTO, Model model) {
-        List<AutocamperDTO> allAutocamperList = autocamperDAO.readAll();
-        List<BookingDTO> allBookingList = bookingDAO.readAll();
-        List<Integer> removedIds = new ArrayList<>();
+        Map<Integer, AutocamperDTO> autocamperMap = autocamperDAO.readAllAsMap();
+        List<BookingDTO> bookingList = bookingDAO.readAll();
 
-        System.out.println(bookingDTO);
+        for(int i = 1; i <= bookingList.size(); i++) {
+            BookingDTO currentBookingDB = bookingList.get(i - 1);
 
-        if (!allBookingList.isEmpty())
-            for (int i = 1; i <= allBookingList.size(); i++) {
-                BookingDTO bookingFromDB = allBookingList.get(i - 1);
+            if((bookingDTO.getPeriodStart().isBefore(currentBookingDB.getPeriodEnd())
+                    && bookingDTO.getPeriodEnd().isAfter(currentBookingDB.getPeriodStart()))) {
 
-                // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap forklaring på sortering af ledige autocampere
-                // Mangler at tjekke for om start/slut dato er det samme
-                if (!removedIds.contains(bookingFromDB.getAutocamperId() - 1)) {
-                    if (bookingDTO.getPeriodStart().isBefore(bookingFromDB.getPeriodEnd()) && bookingDTO.getPeriodEnd().isAfter(bookingFromDB.getPeriodStart())
-                        || bookingDTO.getPeriodStart().equals(bookingFromDB.getPeriodStart()) && bookingDTO.getPeriodEnd().equals(bookingFromDB.getPeriodEnd())) {
-                        removedIds.add(bookingFromDB.getAutocamperId() - 1);
-                        allAutocamperList.remove(bookingFromDB.getAutocamperId() - 1);
-                    }
-                }
+                autocamperMap.remove(currentBookingDB.getAutocamperId());
             }
+        }
 
-        model.addAttribute("autocampers", allAutocamperList);
+        model.addAttribute("autocamperList", autocamperMap);
 
         return "/booking/available";
     }

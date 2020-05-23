@@ -7,6 +7,7 @@ SELECT * FROM employees;
 SELECT * FROM accessories;
 SELECT * FROM autocampers;
 SELECT * FROM bookings;
+SELECT * FROM autocamper_types;
 
 INSERT INTO departments
 (id, name)
@@ -122,6 +123,12 @@ INSERT INTO bookings
 (id, autocamper_id, customer_id, period_start, period_end, dropoff, pickup, price_total)
 VALUES
 (DEFAULT, 4, 1, "2020-05-05", "2020-05-15", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
-(DEFAULT, 4, 1, "2020-05-20", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
-(DEFAULT, 5, 1, "2020-05-11", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
-(DEFAULT, 8, 1, "2020-05-18", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000);
+(DEFAULT, 4, 1, "2020-05-05", "2020-05-15", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 5, 1, "2020-05-01", "2020-05-03", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 5, 1, "2020-05-01", "2020-05-03", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 6, 1, "2020-05-01", "2020-05-10", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 6, 1, "2020-05-01", "2020-05-10", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 7, 1, "2020-05-01", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 8, 1, "2020-05-06", "2020-05-14", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 9, 1, "2020-05-06", "2020-05-20", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 10, 1, "2020-05-20", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000);
