@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
     private Connection conn;
@@ -130,5 +132,33 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
             e.printStackTrace();
         }
         return autocamperList;
+    }
+
+    public Map<Integer,AutocamperDTO> readAllAsMap() {
+        Map<Integer, AutocamperDTO> autocamperMap = new TreeMap<>();
+
+        try {
+            PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM autocampers");
+            ResultSet rs = statementToQuery.executeQuery();
+
+            while(rs.next()) {
+                AutocamperDTO autocamper = new AutocamperDTO();
+                autocamper.setId(rs.getInt(1));
+                autocamper.setBrand(rs.getString(2));
+                autocamper.setModel(rs.getString(3));
+                autocamper.setYear(rs.getInt(4));
+                autocamper.setPrice_day(rs.getInt(5));
+                autocamper.setBeds(rs.getInt(8));
+                autocamper.setSeats(rs.getInt(9));
+                autocamper.setDescription(rs.getString(10));
+
+                autocamperMap.put(autocamper.getId(), autocamper);
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return autocamperMap;
     }
 }
