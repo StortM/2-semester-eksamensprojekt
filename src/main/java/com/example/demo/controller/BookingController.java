@@ -45,7 +45,8 @@ public class BookingController {
                 // https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap forklaring på sortering af ledige autocampere
                 // Mangler at tjekke for om start/slut dato er det samme
                 if (!removedIds.contains(bookingFromDB.getAutocamperId() - 1)) {
-                    if (bookingDTO.getPeriodStart().isBefore(bookingFromDB.getPeriodEnd()) && bookingDTO.getPeriodEnd().isAfter(bookingFromDB.getPeriodStart())) {
+                    if (bookingDTO.getPeriodStart().isBefore(bookingFromDB.getPeriodEnd()) && bookingDTO.getPeriodEnd().isAfter(bookingFromDB.getPeriodStart())
+                        || bookingDTO.getPeriodStart().equals(bookingFromDB.getPeriodStart()) && bookingDTO.getPeriodEnd().equals(bookingFromDB.getPeriodEnd())) {
                         removedIds.add(bookingFromDB.getAutocamperId() - 1);
                         allAutocamperList.remove(bookingFromDB.getAutocamperId() - 1);
                     }

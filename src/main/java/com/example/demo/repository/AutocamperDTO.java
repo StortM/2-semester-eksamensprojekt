@@ -88,4 +88,17 @@ public class AutocamperDTO{
     public void setModel(String model) {
         this.model = model;
     }
+
+    @Override
+    public String toString() {
+        return "AutocamperDTO{" +
+                "id=" + id +
+                ", year=" + year +
+                ", price_day=" + price_day +
+                ", beds=" + beds +
+                ", seats=" + seats +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                '}';
+    }
 }

@@ -6,6 +6,7 @@ SELECT * FROM authorities;
 SELECT * FROM employees;
 SELECT * FROM accessories;
 SELECT * FROM autocampers;
+SELECT * FROM bookings;
 
 INSERT INTO departments
 (id, name)
@@ -30,13 +31,13 @@ VALUES
 INSERT INTO authorities
 (username, authority)
 VALUES
-("Ejer1", "ADMIN"),
-("Salg1", "SALG"),
-("Salg2", "SALG"),
-("Salg3", "SALG"),
-("Rengøring1", "RENGØRING"),
-("Mekaniker1", "MEKANIKER"),
-("Bogholder1", "BOGHOLDER");
+("Ejer1", "ROLE_ADMIN"),
+("Salg1", "ROLE_SALG"),
+("Salg2", "ROLE_SALG"),
+("Salg3", "ROLE_SALG"),
+("Rengøring1", "ROLE_RENGØRING"),
+("Mekaniker1", "ROLE_MEKANIKER"),
+("Bogholder1", "ROLE_BOGHOLDER");
 
 INSERT INTO employees
 (id, department_id, users_username, first_name, last_name, phone, mail, zip_code, city, address)
@@ -87,7 +88,7 @@ VALUES
 (DEFAULT, "Fiat", "Ducato 35", 2011, 2500.00),
 (DEFAULT, "Fiat", "Ducato 35", 2011, 2500.00),
 (DEFAULT, "Fiat", "Ducato 35", 2011, 2500.00),
-(DEFAULT, "Fiat", "Ducato 35", 2011, 2500.00),
+(DEFAULT, "Fiat", "Ducato 35", 2011, 12.00),
 (DEFAULT, "Fiat", "Ducato 35", 2015, 3000.00),
 (DEFAULT, "Fiat", "Ducato 35", 2015, 3000.00),
 (DEFAULT, "Fiat", "Ducato 35", 2015, 3000.00),
@@ -116,3 +117,11 @@ VALUES
 (DEFAULT, "Knaus", "Van TI Plus", 2020, 5000.00),
 (DEFAULT, "Knaus", "Van TI Plus", 2020, 5000.00),
 (DEFAULT, "Knaus", "Van TI Plus", 2020, 5000.00);
+
+INSERT INTO bookings
+(id, autocamper_id, customer_id, period_start, period_end, dropoff, pickup, price_total)
+VALUES
+(DEFAULT, 4, 1, "2020-05-05", "2020-05-15", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 4, 1, "2020-05-20", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 5, 1, "2020-05-11", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
+(DEFAULT, 8, 1, "2020-05-18", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000);
