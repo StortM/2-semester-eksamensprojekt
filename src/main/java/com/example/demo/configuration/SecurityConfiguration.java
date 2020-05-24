@@ -41,8 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //Selvom authorities er defineret some ROLE_**** og det ikke er nedenfor, så er dette stadigvæk korrekt, da Spring tilføjer
                 //"ROLE_" som et prefix, når man specificerer roller i configure
                 // se https://stackoverflow.com/questions/33205236/spring-security-added-prefix-role-to-all-roles-name
-                .antMatchers("/**").permitAll()
-                .antMatchers("/booking/**").permitAll().and()
+                .antMatchers("/**").permitAll().and()
+
                 /*
                 .antMatchers("/").hasAnyRole("SALG, ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
