@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO implements CRUDRepository<CustomerDTO>{
@@ -61,8 +62,25 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     public void update(CustomerDTO customerDTO) {
 
         try {
-            PreparedStatement statementToExecute = conn.prepareStatement("");
+            PreparedStatement statementToExecute = conn.prepareStatement("UPDATE customers SET " +
+                    "first_name = ?, " +
+                    "last_name = ?, " +
+                    "phone = ?, " +
+                    "mail = ?, " +
+                    "zip_code = ?," +
+                    "city = ?," +
+                    "address = ?" +
+                    "WHERE id = ?");
 
+            statementToExecute.setString(1,customerDTO.getFirstName());
+            statementToExecute.setString(2,customerDTO.getLastName());
+            statementToExecute.setInt(3,customerDTO.getPhone());
+            statementToExecute.setString(4,customerDTO.getMail());
+            statementToExecute.setInt(5,customerDTO.getZipCode());
+            statementToExecute.setString(6,customerDTO.getCity());
+            statementToExecute.setString(7,customerDTO.getAddress());
+
+            statementToExecute.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -72,7 +90,9 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     public void delete(int id) {
 
         try {
-            PreparedStatement statementToExecute = conn.prepareStatement("");
+            PreparedStatement statementToExecute = conn.prepareStatement("DELETE FROM customers WHERE id = ?");
+            statementToExecute.setInt(1,id);
+            statementToExecute.executeUpdate();
 
         } catch(SQLException e) {
             e.printStackTrace();
@@ -81,15 +101,29 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
 
     @Override
     public List<CustomerDTO> readAll() {
-
+        List<CustomerDTO> customerList = new ArrayList<>();
         try {
-            PreparedStatement statementToQuery = conn.prepareStatement("");
+            PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers");
+            ResultSet rs = statementToQuery.executeQuery();
 
+            while(rs.next()){
+                CustomerDTO customer = new CustomerDTO();
+                customer.setId(rs.getInt(1));
+                customer.setFirstName(rs.getString(2));
+                customer.setLastName(rs.getString(3));
+                customer.setPhone(rs.getInt(4));
+                customer.setMail(rs.getString(5));
+                customer.setZipCode(rs.getInt(6));
+                customer.setCity(rs.getString(7));
+                customer.setAddress(rs.getString(8));
+
+                customerList.add(customer);
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return customerList;
     }
 
     /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
