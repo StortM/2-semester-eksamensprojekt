@@ -52,7 +52,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
     //TODO Atm. kan der ikke oprettes nye autocamper_types. Herudover kan der oprettes autocampere uden tilhørende type
     public void create(AutocamperDTO autocamperDTO) {
         try {
-            PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO autocampers VALUES (?,?,?,?)");
+            PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO autocampers " + "(autocamper_type_brand, autocamper_type_model, year, price_day)" + " VALUES (?,?,?,?)");
             statementToInsert.setString(1, autocamperDTO.getBrand());
             statementToInsert.setString(2, autocamperDTO.getModel());
             statementToInsert.setInt(3, autocamperDTO.getYear());

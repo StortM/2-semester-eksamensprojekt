@@ -29,13 +29,31 @@ public class BookingController {
 
     @GetMapping("/booking")
     public String displayChooseDateForm(Model model) {
+        model.addAttribute("title", "Vælg Dato");
+
         bookingBeingCreated = new BookingDTO();
         model.addAttribute("bookingBeingCreated", bookingBeingCreated);
         return "/booking/date";
     }
 
+    @GetMapping("/booking/list")
+    public String displayBookingList(Model model) {
+        model.addAttribute("title", "Bookinger");
+        model.addAttribute("bookingList", bookingDAO.readAll());
+
+        /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
+        model.addAttribute("customerList", customerDAO.readAll());
+        model.addAttribute("autocamperList", autocamperDAO.readAll());
+
+         */
+
+        return "/booking/list";
+    }
+
     @PostMapping("/booking/available")
     public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model) {
+        model.addAttribute("title", "Ledige Autocampere");
+
         LocalDate periodStartAsDate = LocalDate.parse(periodStart);
         LocalDate periodEndAsDate = LocalDate.parse(periodEnd);
 
@@ -62,21 +80,29 @@ public class BookingController {
 
     @GetMapping("/booking/addAutocamper")
     public String addAutocamper(@RequestParam int id) {
-        bookingBeingCreated.setAutocamperId(id);
+        this.bookingBeingCreated.setAutocamperId(id);
 
         return "redirect:/booking/customer";
     }
 
     @GetMapping("/booking/customer")
-    public String displayCustomerForm() {
+    public String displayCustomerForm(Model model) {
+        model.addAttribute("title", "Tilføj Kunde");
 
         return "/booking/customer";
     }
 
     @PostMapping("/booking/customer")
-    public String processCustomerForm(
-            @RequestParam String firstName, @RequestParam String lastName, @RequestParam int phone,
-            @RequestParam String mail, @RequestParam int zipCode, @RequestParam String city, @RequestParam String address) {
+    public String processCustomerForm(Model model,
+                                      @RequestParam String firstName,
+                                      @RequestParam String lastName,
+                                      @RequestParam int phone,
+                                      @RequestParam String mail,
+                                      @RequestParam int zipCode,
+                                      @RequestParam String city,
+                                      @RequestParam String address) {
+
+        model.addAttribute("title", "Oversigt");
 
         CustomerDTO customerToBeCreated = new CustomerDTO(firstName, lastName, phone, mail, zipCode, city, address);
         customerDAO.create(customerToBeCreated);
@@ -84,6 +110,12 @@ public class BookingController {
         customerToBeCreated.setId(customerDAO.readLast().getId());
 
         bookingBeingCreated.setCustomerId(customerToBeCreated.getId());
+
+        int bookingId = bookingDAO.readLast().getId() + 1;
+        bookingBeingCreated.setId(bookingId);
+        bookingDAO.create(bookingBeingCreated);
+
+        model.addAttribute(bookingBeingCreated);
 
         return "/booking/overview";
     }

@@ -63,4 +63,32 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
 
         return bookingsList;
     }
+
+    /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
+    som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden
+ */
+    public BookingDTO readLast() {
+        BookingDTO bookingToReturn = new BookingDTO();
+
+        try {
+            PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM bookings ORDER BY id", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = statementToQuery.executeQuery();
+
+            rs.last();
+
+            bookingToReturn.setId(rs.getInt(1));
+            bookingToReturn.setAutocamperId(rs.getInt(2));
+            bookingToReturn.setCustomerId(rs.getInt(3));
+            bookingToReturn.setPeriodStart(LocalDate.parse(rs.getDate(4).toString()));
+            bookingToReturn.setPeriodEnd(LocalDate.parse(rs.getDate(5).toString()));
+            bookingToReturn.setDropOff(rs.getString(6));
+            bookingToReturn.setPickUp(rs.getString(7));
+            bookingToReturn.setPriceTotal(rs.getInt(8));
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bookingToReturn;
+    }
 }

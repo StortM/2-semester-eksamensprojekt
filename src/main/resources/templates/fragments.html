@@ -1,22 +1,24 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:fragments="navbar">
+<head th:fragment="head">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:text="${title}">Nordic Rental</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
 <body>
 <nav th:fragment="navbar" class="site-header sticky-top py-1">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
         <span class="font-weight-bold py-2 d-none d-inline-block" th:text="Velkommen " th:sec:authentication="name"> bruger</span>
-        <a class="py-2 d-none d-md-inline-block" href="/home">Hjem</a>
+        <a class="py-2 d-none d-md-inline-block" href="/">Hjem</a>
         <a class="py-2 d-none d-md-inline-block" href="/booking">Opret Booking</a>
-        <a class="py-2 d-none d-md-inline-block" href="/booking/list">Se Bookinger</a>
+        <a class="py-2 d-none d-md-inline-block" href="/booking/list">Bookinger</a>
         <a class="py-2 d-none d-md-inline-block" href="/autocampere">Autocampere</a>
         <a class="py-2 d-none d-md-inline-block" href="/kunder">Kunder</a>
     </div>

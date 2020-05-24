@@ -1,19 +1,10 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Opret Booking</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+<head th:insert="fragments.html :: head">
 </head>
 <body>
-<nav th:insert="fragments/navbar.html :: navbar"></nav>
+<nav th:insert="fragments.html :: navbar"></nav>
 
 <div class="container">
     <div class="content">
@@ -31,7 +22,7 @@
                 <input class="form-control" id="periodEnd" name="periodEnd" type="date"/>
                 </div>
             </div>
-            <input class="btn btn-primary" name="submit" type="submit" value="Vælg"/>
+            <input class="btn btn-outline-primary" name="submit" type="submit" value="Vælg"/>
         </form>
     </div>
 </div>

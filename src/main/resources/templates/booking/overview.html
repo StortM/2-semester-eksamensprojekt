@@ -1,24 +1,22 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Booking - Overblik</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+<head th:insert="fragments.html :: head">
 </head>
 <body>
-<nav th:insert="fragments/navbar.html :: navbar"></nav>
+<nav th:insert="fragments.html :: navbar"></nav>
 
 <div class="container">
     <div class="content">
-        <h1>Booking Overblik</h1>
-
+        <h1>Booking</h1>
+        <p>Booking ID: <span th:text="${bookingDTO.id}"></span></p>
+        <p>Autocamper ID: <span th:text="${bookingDTO.autocamperId}"></span></p>
+        <p>Kunde ID: <span th:text="${bookingDTO.customerId}"></span></p>
+        <p>Fra: <span th:text="${bookingDTO.periodStart}"></span></p>
+        <p>Til: <span th:text="${bookingDTO.periodEnd}"></span></p>
+        <p>Drop-off: <span th:text="${bookingDTO.dropOff}"></span></p>
+        <p>Pick-up: <span th:text="${bookingDTO.pickUp}"></span></p>
+        <p>Total Pris: <span th:text="${bookingDTO.priceTotal}"></span></p>
     </div>
 </div>
 

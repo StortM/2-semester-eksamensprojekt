@@ -2,15 +2,8 @@
 <!doctype html>
     <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
           xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Hello, world!</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<head th:insert="fragments.html :: head">
+    <title th:text="${title}">Nordic Rental</title>
     <link rel="stylesheet" th:href="@{/css/signin.css}">
 
 </head>
