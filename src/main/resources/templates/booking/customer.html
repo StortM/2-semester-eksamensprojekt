@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Opret Booking - Kundeinformationer</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<nav th:insert="fragments/navbar.html :: navbar"></nav>
+
+<div class="container">
+    <div class="content">
+        <h1>Kundeinformationer</h1>
+        <br>
+        <form method="post">
+            <div class="form-group-row">
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="firstName">Fornavn</label>
+                    <input class="form-control" id="firstName" name="firstName" type="text"/>
+                </div>
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="lastName">Efternavn</label>
+                    <input class="form-control" id="lastName" name="lastName" type="text"/>
+                </div>
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="phone">Telefon nummer</label>
+                    <input class="form-control" id="phone" name="phone" type="number"/>
+                </div>
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="mail">Email</label>
+                    <input class="form-control" id="mail" name="mail" type="email"/>
+                </div>
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="zipCode">Postnummer</label>
+                    <input class="form-control" id="zipCode" name="zipCode" type="number"/>
+                </div>
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="city">By</label>
+                    <input class="form-control" id="city" name="city" type="text"/>
+                </div>
+                <div class="col-3 mx-auto">
+                    <label class="col-form-label font-weight-bold" for="address">Adresse</label>
+                    <input class="form-control" id="address" name="address" type="text"/>
+                </div>
+            </div>
+
+            <input class="btn btn-primary" name="submit" type="submit" value="Videre"/>
+        </form>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script th:src="@{/js/bootstrap.min.js}" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>

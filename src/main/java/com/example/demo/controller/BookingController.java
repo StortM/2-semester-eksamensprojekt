@@ -3,10 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,28 +17,39 @@ public class BookingController {
 
     private AutocamperDAO autocamperDAO;
     private BookingDAO bookingDAO;
+    private CustomerDAO customerDAO;
+    private BookingDTO bookingBeingCreated;
 
     public BookingController() throws SQLException {
         autocamperDAO = new AutocamperDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
         bookingDAO = new BookingDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        customerDAO = new CustomerDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
     }
 
+
     @GetMapping("/booking")
-    public String bookingChooseDate(Model model) {
-        model.addAttribute("bookingDTO", new BookingDTO());
+    public String displayChooseDateForm(Model model) {
+        bookingBeingCreated = new BookingDTO();
+        model.addAttribute("bookingBeingCreated", bookingBeingCreated);
         return "/booking/date";
     }
 
     @PostMapping("/booking/available")
-    public String bookingShowAvailable(@ModelAttribute BookingDTO bookingDTO, Model model) {
+    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model) {
+        LocalDate periodStartAsDate = LocalDate.parse(periodStart);
+        LocalDate periodEndAsDate = LocalDate.parse(periodEnd);
+
+        bookingBeingCreated.setPeriodStart(periodStartAsDate);
+        bookingBeingCreated.setPeriodEnd(periodEndAsDate);
+
         Map<Integer, AutocamperDTO> autocamperMap = autocamperDAO.readAllAsMap();
         List<BookingDTO> bookingList = bookingDAO.readAll();
 
         for(int i = 1; i <= bookingList.size(); i++) {
             BookingDTO currentBookingDB = bookingList.get(i - 1);
 
-            if((bookingDTO.getPeriodStart().isBefore(currentBookingDB.getPeriodEnd())
-                    && bookingDTO.getPeriodEnd().isAfter(currentBookingDB.getPeriodStart()))) {
+            if((periodStartAsDate.isBefore(currentBookingDB.getPeriodEnd())
+                    && periodEndAsDate.isAfter(currentBookingDB.getPeriodStart()))) {
 
                 autocamperMap.remove(currentBookingDB.getAutocamperId());
             }
@@ -52,12 +60,31 @@ public class BookingController {
         return "/booking/available";
     }
 
-    /*
-    @GetMapping("/booking/available")
-    public String bookingShowAvailable(Model model) {
-        model.addAttribute("autocampers", autocamperDAO.readAll());
+    @GetMapping("/booking/addAutocamper")
+    public String addAutocamper(@RequestParam int id) {
+        bookingBeingCreated.setAutocamperId(id);
 
-        return "/booking/available";
+        return "redirect:/booking/customer";
     }
-     */
+
+    @GetMapping("/booking/customer")
+    public String displayCustomerForm() {
+
+        return "/booking/customer";
+    }
+
+    @PostMapping("/booking/customer")
+    public String processCustomerForm(
+            @RequestParam String firstName, @RequestParam String lastName, @RequestParam int phone,
+            @RequestParam String mail, @RequestParam int zipCode, @RequestParam String city, @RequestParam String address) {
+
+        CustomerDTO customerToBeCreated = new CustomerDTO(firstName, lastName, phone, mail, zipCode, city, address);
+        customerDAO.create(customerToBeCreated);
+
+        customerToBeCreated.setId(customerDAO.readLast().getId());
+
+        bookingBeingCreated.setCustomerId(customerToBeCreated.getId());
+
+        return "/booking/overview";
+    }
 }

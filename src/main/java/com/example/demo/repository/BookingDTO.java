@@ -31,6 +31,17 @@ public class BookingDTO {
         this.priceTotal = priceTotal;
     }
 
+    // Constructor uden id da vi lader DB håndterer tildeling af id til hvert entry
+    public BookingDTO(int autocamperId, int customerId, LocalDate periodStart, LocalDate periodEnd, String dropOff, String pickUp, int priceTotal) {
+        this.autocamperId = autocamperId;
+        this.customerId = customerId;
+        this.periodStart = periodStart;
+        this.periodEnd = periodEnd;
+        this.dropOff = dropOff;
+        this.pickUp = pickUp;
+        this.priceTotal = priceTotal;
+    }
+
     public int getId() {
         return id;
     }

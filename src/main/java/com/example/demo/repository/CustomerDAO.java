@@ -16,7 +16,7 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     @Override
     public void create(CustomerDTO customerDTO) {
         try {
-            PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO customers " + "(first_name, last_name, phone, mail, zip_code, city, address)" + " VALUES (?, ?, ?, ?, ?, ?, ?)");
             statementToInsert.setString(1, customerDTO.getFirstName());
             statementToInsert.setString(2, customerDTO.getLastName());
             statementToInsert.setInt(3, customerDTO.getPhone());
@@ -90,5 +90,33 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
         }
 
         return null;
+    }
+
+    /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
+        som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden
+     */
+    public CustomerDTO readLast() {
+        CustomerDTO customerToReturn = new CustomerDTO();
+
+        try {
+            PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers ORDER BY id", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = statementToQuery.executeQuery();
+
+            rs.last();
+
+            customerToReturn.setId(rs.getInt(1));
+            customerToReturn.setFirstName(rs.getString(2));
+            customerToReturn.setLastName(rs.getString(3));
+            customerToReturn.setPhone(rs.getInt(4));
+            customerToReturn.setMail(rs.getString(5));
+            customerToReturn.setZipCode(rs.getInt(6));
+            customerToReturn.setCity(rs.getString(7));
+            customerToReturn.setAddress(rs.getString(8));
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return customerToReturn;
     }
 }

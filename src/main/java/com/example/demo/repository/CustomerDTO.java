@@ -25,6 +25,17 @@ public class CustomerDTO {
         this.address = address;
     }
 
+    // Constructor uden id da vi lader DB håndterer tildeling af id til hvert entry
+    public CustomerDTO(String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.mail = mail;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.address = address;
+    }
+
     public int getId() {
         return id;
     }

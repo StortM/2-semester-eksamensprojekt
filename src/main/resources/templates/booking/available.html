@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Opret Booking</title>
+    <title>Opret Booking - Ledige Autocampere</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -39,7 +39,7 @@
                 <td th:text="${autocamperDTO.getValue().getSeats()}"></td>
                 <td th:text="${autocamperDTO.getValue().getPriceDay()}"></td>
                 <td>
-                    <a href="" class="btn btn-success" role="button">Vælg</a>
+                    <a th:href="@{/booking/addAutocamper(id=${autocamperDTO.getValue().getId()})}" class="btn btn-success" role="button">Vælg</a>
                 </td>
             </tr>
         </table>
