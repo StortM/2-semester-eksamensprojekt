@@ -4,13 +4,12 @@ import com.example.demo.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Controller
 public class BookingController {
@@ -26,10 +25,14 @@ public class BookingController {
         customerDAO = new CustomerDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
     }
 
-
     @GetMapping("/booking")
-    public String displayChooseDateForm(Model model) {
+    public String displayChooseDateForm(Model model, HttpSession httpSession) {
         model.addAttribute("title", "Vælg Dato");
+
+        BookingDTO tempBooking = new BookingDTO();
+        tempBooking.setPriceTotal(8000);
+
+        httpSession.setAttribute("newBooking", tempBooking);
 
         bookingBeingCreated = new BookingDTO();
         model.addAttribute("bookingBeingCreated", bookingBeingCreated);
@@ -51,7 +54,7 @@ public class BookingController {
     }
 
     @PostMapping("/booking/available")
-    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model) {
+    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model, HttpSession httpSession, SessionStatus sessionStatus) {
         model.addAttribute("title", "Ledige Autocampere");
 
         LocalDate periodStartAsDate = LocalDate.parse(periodStart);
@@ -61,7 +64,7 @@ public class BookingController {
         bookingBeingCreated.setPeriodEnd(periodEndAsDate);
 
         Map<Integer, AutocamperDTO> autocamperMap = autocamperDAO.readAllAsMap();
-        List<BookingDTO> bookingList = bookingDAO.readAll();
+        List<BookingDTO> bookingList = (List<BookingDTO>) bookingDAO.readAll();
 
         for(int i = 1; i <= bookingList.size(); i++) {
             BookingDTO currentBookingDB = bookingList.get(i - 1);
@@ -72,6 +75,11 @@ public class BookingController {
                 autocamperMap.remove(currentBookingDB.getAutocamperId());
             }
         }
+
+        BookingDTO bookingDTO = (BookingDTO) httpSession.getAttribute("newBooking");
+
+        bookingDTO.setPickUp("qtqqtqtqqt");
+        System.out.println(bookingDTO);
 
         model.addAttribute("autocamperList", autocamperMap);
 
@@ -100,7 +108,7 @@ public class BookingController {
                                       @RequestParam String mail,
                                       @RequestParam int zipCode,
                                       @RequestParam String city,
-                                      @RequestParam String address) {
+                                      @RequestParam String address, HttpSession httpSession) {
 
         model.addAttribute("title", "Oversigt");
 

@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
     private Connection conn;
@@ -103,7 +100,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
     }
 
     @Override
-    public List<AutocamperDTO> readAll() {
+    public Collection<AutocamperDTO> readAll() {
         List<AutocamperDTO> autocamperList = new ArrayList<>();
 
         try{

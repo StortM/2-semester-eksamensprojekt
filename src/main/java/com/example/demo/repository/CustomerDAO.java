@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class CustomerDAO implements CRUDRepository<CustomerDTO>{
@@ -100,7 +101,7 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     }
 
     @Override
-    public List<CustomerDTO> readAll() {
+    public Collection<CustomerDTO> readAll() {
         List<CustomerDTO> customerList = new ArrayList<>();
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers");
