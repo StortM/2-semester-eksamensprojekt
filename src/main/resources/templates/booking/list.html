@@ -22,15 +22,15 @@
                 <th>Total Pris</th>
                 <th></th>
             </tr>
-            <tr th:each="bookingDTO : ${bookingList}">
-                <td th:text="${bookingDTO.id}"></td>
-                <td th:text="${bookingDTO.autocamperId}"></td>
-                <td th:text="${bookingDTO.customerId}"></td>
-                <td th:text="${bookingDTO.periodStart}"></td>
-                <td th:text="${bookingDTO.periodEnd}"></td>
-                <td th:text="${bookingDTO.dropOff}"></td>
-                <td th:text="${bookingDTO.pickUp}"></td>
-                <td th:text="${bookingDTO.priceTotal}"></td>
+            <tr th:each="booking : ${bookingList}">
+                <td th:text="${booking.id}"></td>
+                <td th:text="${booking.autocamperId}"></td>
+                <td th:text="${booking.customerId}"></td>
+                <td th:text="${booking.periodStart}"></td>
+                <td th:text="${booking.periodEnd}"></td>
+                <td th:text="${booking.dropOff}"></td>
+                <td th:text="${booking.pickUp}"></td>
+                <td th:text="${booking.priceTotal}"></td>
                 <td>
                     <div class="btn-group">
                         <a href="" class="btn btn-outline-primary " role="button">Rediger</a>

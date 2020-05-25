@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Customer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,24 +10,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CustomerDAO implements CRUDRepository<CustomerDTO>{
+public class CustomerRepositoryImpl implements ICRUDRepository<Customer> {
     private Connection conn;
 
-    public CustomerDAO(Connection conn) {
+    public CustomerRepositoryImpl(Connection conn) {
         this.conn = conn;
     }
 
     @Override
-    public void create(CustomerDTO customerDTO) {
+    public void create(Customer customer) {
         try {
             PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO customers " + "(first_name, last_name, phone, mail, zip_code, city, address)" + " VALUES (?, ?, ?, ?, ?, ?, ?)");
-            statementToInsert.setString(1, customerDTO.getFirstName());
-            statementToInsert.setString(2, customerDTO.getLastName());
-            statementToInsert.setInt(3, customerDTO.getPhone());
-            statementToInsert.setString(4, customerDTO.getMail());
-            statementToInsert.setInt(5, customerDTO.getZipCode());
-            statementToInsert.setString(6, customerDTO.getCity());
-            statementToInsert.setString(7, customerDTO.getAddress());
+            statementToInsert.setString(1, customer.getFirstName());
+            statementToInsert.setString(2, customer.getLastName());
+            statementToInsert.setInt(3, customer.getPhone());
+            statementToInsert.setString(4, customer.getMail());
+            statementToInsert.setInt(5, customer.getZipCode());
+            statementToInsert.setString(6, customer.getCity());
+            statementToInsert.setString(7, customer.getAddress());
 
             statementToInsert.executeUpdate();
 
@@ -35,8 +37,8 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     }
 
     @Override
-    public CustomerDTO read(int id) {
-        CustomerDTO customerToReturn = new CustomerDTO();
+    public Customer read(int id) {
+        Customer customerToReturn = new Customer();
 
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers WHERE id=?");
@@ -60,7 +62,7 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     }
 
     @Override
-    public void update(CustomerDTO customerDTO) {
+    public void update(Customer customer) {
 
         try {
             PreparedStatement statementToExecute = conn.prepareStatement("UPDATE customers SET " +
@@ -73,13 +75,13 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
                     "address = ?" +
                     "WHERE id = ?");
 
-            statementToExecute.setString(1,customerDTO.getFirstName());
-            statementToExecute.setString(2,customerDTO.getLastName());
-            statementToExecute.setInt(3,customerDTO.getPhone());
-            statementToExecute.setString(4,customerDTO.getMail());
-            statementToExecute.setInt(5,customerDTO.getZipCode());
-            statementToExecute.setString(6,customerDTO.getCity());
-            statementToExecute.setString(7,customerDTO.getAddress());
+            statementToExecute.setString(1, customer.getFirstName());
+            statementToExecute.setString(2, customer.getLastName());
+            statementToExecute.setInt(3, customer.getPhone());
+            statementToExecute.setString(4, customer.getMail());
+            statementToExecute.setInt(5, customer.getZipCode());
+            statementToExecute.setString(6, customer.getCity());
+            statementToExecute.setString(7, customer.getAddress());
 
             statementToExecute.executeUpdate();
         } catch(SQLException e) {
@@ -101,14 +103,14 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     }
 
     @Override
-    public Collection<CustomerDTO> readAll() {
-        List<CustomerDTO> customerList = new ArrayList<>();
+    public Collection<Customer> readAll() {
+        List<Customer> customerList = new ArrayList<>();
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers");
             ResultSet rs = statementToQuery.executeQuery();
 
             while(rs.next()){
-                CustomerDTO customer = new CustomerDTO();
+                Customer customer = new Customer();
                 customer.setId(rs.getInt(1));
                 customer.setFirstName(rs.getString(2));
                 customer.setLastName(rs.getString(3));
@@ -130,8 +132,8 @@ public class CustomerDAO implements CRUDRepository<CustomerDTO>{
     /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
         som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden
      */
-    public CustomerDTO readLast() {
-        CustomerDTO customerToReturn = new CustomerDTO();
+    public Customer readLast() {
+        Customer customerToReturn = new Customer();
 
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers ORDER BY id", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);

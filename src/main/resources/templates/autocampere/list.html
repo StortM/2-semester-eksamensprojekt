@@ -21,14 +21,14 @@
                 <th>Pris pr. dag</th>
                 <th></th>
             </tr>
-            <tr th:each="autocamperDTO : ${autocamperList}">
-                <td th:text="${autocamperDTO.id}"></td>
-                <td th:text="${autocamperDTO.brand}"></td>
-                <td th:text="${autocamperDTO.model}"></td>
-                <td th:text="${autocamperDTO.year}"></td>
-                <td th:text="${autocamperDTO.beds}"></td>
-                <td th:text="${autocamperDTO.seats}"></td>
-                <td th:text="${autocamperDTO.priceDay}"></td>
+            <tr th:each="autocamper : ${autocamperList}">
+                <td th:text="${autocamper.id}"></td>
+                <td th:text="${autocamper.brand}"></td>
+                <td th:text="${autocamper.model}"></td>
+                <td th:text="${autocamper.year}"></td>
+                <td th:text="${autocamper.beds}"></td>
+                <td th:text="${autocamper.seats}"></td>
+                <td th:text="${autocamper.priceDay}"></td>
                 <td>
                     <div class="btn-group">
                         <a href="" class="btn btn-outline-primary " role="button">Rediger</a>

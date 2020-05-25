@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.model;
 
-public class AutocamperDTO{
+public class Autocamper {
     private int id;
     private int year;
     private int priceDay;
@@ -10,11 +10,11 @@ public class AutocamperDTO{
     private String brand;
     private String model;
 
-    public AutocamperDTO(){
+    public Autocamper(){
 
     }
 
-    public AutocamperDTO(int id, int year, int priceDay, int beds, int seats, String description, String brand, String model) {
+    public Autocamper(int id, int year, int priceDay, int beds, int seats, String description, String brand, String model) {
         this.id = id;
         this.year = year;
         this.priceDay = priceDay;
@@ -91,7 +91,7 @@ public class AutocamperDTO{
 
     @Override
     public String toString() {
-        return "AutocamperDTO{" +
+        return "Autocamper{" +
                 "id=" + id +
                 ", year=" + year +
                 ", price_day=" + priceDay +

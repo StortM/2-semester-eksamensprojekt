@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Autocamper;
+import com.example.demo.model.Booking;
+import com.example.demo.model.Customer;
 import com.example.demo.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,27 +17,27 @@ import java.util.*;
 @Controller
 public class BookingController {
 
-    private AutocamperDAO autocamperDAO;
-    private BookingDAO bookingDAO;
-    private CustomerDAO customerDAO;
-    private BookingDTO bookingBeingCreated;
+    private AutocamperRepositoryImpl autocamperRepositoryImpl;
+    private BookingRepositoryImpl bookingRepositoryImpl;
+    private CustomerRepositoryImpl customerRepositoryImpl;
+    private Booking bookingBeingCreated;
 
     public BookingController() throws SQLException {
-        autocamperDAO = new AutocamperDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
-        bookingDAO = new BookingDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
-        customerDAO = new CustomerDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        autocamperRepositoryImpl = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        bookingRepositoryImpl = new BookingRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        customerRepositoryImpl = new CustomerRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
     }
 
     @GetMapping("/booking")
     public String displayChooseDateForm(Model model, HttpSession httpSession) {
         model.addAttribute("title", "Vælg Dato");
 
-        BookingDTO tempBooking = new BookingDTO();
+        Booking tempBooking = new Booking();
         tempBooking.setPriceTotal(8000);
 
         httpSession.setAttribute("newBooking", tempBooking);
 
-        bookingBeingCreated = new BookingDTO();
+        bookingBeingCreated = new Booking();
         model.addAttribute("bookingBeingCreated", bookingBeingCreated);
         return "/booking/date";
     }
@@ -42,10 +45,10 @@ public class BookingController {
     @GetMapping("/booking/list")
     public String displayBookingList(Model model) {
         model.addAttribute("title", "Bookinger");
-        model.addAttribute("bookingList", bookingDAO.readAll());
+        model.addAttribute("bookingList", bookingRepositoryImpl.readAll());
 
         /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
-        model.addAttribute("customerList", customerDAO.readAll());
+        model.addAttribute("customerList", customerRepositoryImpl.readAll());
         model.addAttribute("autocamperList", autocamperDAO.readAll());
 
          */
@@ -63,11 +66,11 @@ public class BookingController {
         bookingBeingCreated.setPeriodStart(periodStartAsDate);
         bookingBeingCreated.setPeriodEnd(periodEndAsDate);
 
-        Map<Integer, AutocamperDTO> autocamperMap = autocamperDAO.readAllAsMap();
-        List<BookingDTO> bookingList = (List<BookingDTO>) bookingDAO.readAll();
+        Map<Integer, Autocamper> autocamperMap = autocamperRepositoryImpl.readAllAsMap();
+        List<Booking> bookingList = (List<Booking>) bookingRepositoryImpl.readAll();
 
         for(int i = 1; i <= bookingList.size(); i++) {
-            BookingDTO currentBookingDB = bookingList.get(i - 1);
+            Booking currentBookingDB = bookingList.get(i - 1);
 
             if((periodStartAsDate.isBefore(currentBookingDB.getPeriodEnd())
                     && periodEndAsDate.isAfter(currentBookingDB.getPeriodStart()))) {
@@ -76,10 +79,10 @@ public class BookingController {
             }
         }
 
-        BookingDTO bookingDTO = (BookingDTO) httpSession.getAttribute("newBooking");
+        Booking booking = (Booking) httpSession.getAttribute("newBooking");
 
-        bookingDTO.setPickUp("qtqqtqtqqt");
-        System.out.println(bookingDTO);
+        booking.setPickUp("qtqqtqtqqt");
+        System.out.println(booking);
 
         model.addAttribute("autocamperList", autocamperMap);
 
@@ -112,16 +115,16 @@ public class BookingController {
 
         model.addAttribute("title", "Oversigt");
 
-        CustomerDTO customerToBeCreated = new CustomerDTO(firstName, lastName, phone, mail, zipCode, city, address);
-        customerDAO.create(customerToBeCreated);
+        Customer customerToBeCreated = new Customer(firstName, lastName, phone, mail, zipCode, city, address);
+        customerRepositoryImpl.create(customerToBeCreated);
 
-        customerToBeCreated.setId(customerDAO.readLast().getId());
+        customerToBeCreated.setId(customerRepositoryImpl.readLast().getId());
 
         bookingBeingCreated.setCustomerId(customerToBeCreated.getId());
 
-        int bookingId = bookingDAO.readLast().getId() + 1;
+        int bookingId = bookingRepositoryImpl.readLast().getId() + 1;
         bookingBeingCreated.setId(bookingId);
-        bookingDAO.create(bookingBeingCreated);
+        bookingRepositoryImpl.create(bookingBeingCreated);
 
         model.addAttribute(bookingBeingCreated);
 

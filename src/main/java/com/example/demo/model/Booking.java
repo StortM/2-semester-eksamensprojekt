@@ -1,10 +1,10 @@
-package com.example.demo.repository;
+package com.example.demo.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-public class BookingDTO {
+public class Booking {
     private int id;
     private int autocamperId;
     private int customerId;
@@ -16,11 +16,11 @@ public class BookingDTO {
     private String pickUp;
     private int priceTotal;
 
-    public BookingDTO() {
+    public Booking() {
         // default empty
     }
 
-    public BookingDTO(int id, int autocamperId, int customerId, LocalDate periodStart, LocalDate periodEnd, String dropOff, String pickUp, int priceTotal) {
+    public Booking(int id, int autocamperId, int customerId, LocalDate periodStart, LocalDate periodEnd, String dropOff, String pickUp, int priceTotal) {
         this.id = id;
         this.autocamperId = autocamperId;
         this.customerId = customerId;
@@ -32,7 +32,7 @@ public class BookingDTO {
     }
 
     // Constructor uden id da vi lader DB håndterer tildeling af id til hvert entry
-    public BookingDTO(int autocamperId, int customerId, LocalDate periodStart, LocalDate periodEnd, String dropOff, String pickUp, int priceTotal) {
+    public Booking(int autocamperId, int customerId, LocalDate periodStart, LocalDate periodEnd, String dropOff, String pickUp, int priceTotal) {
         this.autocamperId = autocamperId;
         this.customerId = customerId;
         this.periodStart = periodStart;
@@ -109,7 +109,7 @@ public class BookingDTO {
 
     @Override
     public String toString() {
-        return "BookingDTO{" +
+        return "Booking{" +
                 "id=" + id +
                 ", autocamperId=" + autocamperId +
                 ", customerId=" + customerId +
