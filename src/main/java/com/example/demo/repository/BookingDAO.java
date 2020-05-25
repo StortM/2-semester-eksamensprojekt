@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class BookingDAO implements CRUDRepository<BookingDTO> {
@@ -99,7 +100,7 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
     }
 
     @Override
-    public List<BookingDTO> readAll() {
+    public Collection<BookingDTO> readAll() {
         List<BookingDTO> bookingsList = new ArrayList<>();
 
         try {
