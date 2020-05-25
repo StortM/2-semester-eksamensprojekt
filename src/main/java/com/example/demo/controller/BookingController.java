@@ -26,29 +26,32 @@ public class BookingController {
         customerDAO = new CustomerDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
     }
 
+    /*
+    @ModelAttribute("bookingBeingCreated")
+    public BookingDTO addBookingToSession() {
+
+        BookingDTO bookingDTO = new BookingDTO();
+
+        bookingDTO.setPickUp("hej med dig");
+
+        return bookingDTO;
+    }
+     */
+
     @GetMapping("/booking")
-    public String displayChooseDateForm(Model model, HttpSession httpSession) {
+    public String initializeBookingProcess(HttpSession httpSession) {
         httpSession.removeAttribute("bookingBeingCreated");
 
+        return "redirect:/booking/date";
+    }
+
+    @GetMapping("/booking/date")
+    public String displayChooseDateForm(Model model, HttpSession httpSession) {
 
         model.addAttribute("title", "Vælg Dato");
         model.addAttribute("bookingBeingCreated", new BookingDTO());
 
         return "/booking/date";
-    }
-
-    @GetMapping("/booking/list")
-    public String displayBookingList(Model model) {
-        model.addAttribute("title", "Bookinger");
-        model.addAttribute("bookingList", bookingDAO.readAll());
-
-        /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
-        model.addAttribute("customerList", customerDAO.readAll());
-        model.addAttribute("autocamperList", autocamperDAO.readAll());
-
-         */
-
-        return "/booking/list";
     }
 
     @PostMapping("/booking/available")
@@ -80,6 +83,41 @@ public class BookingController {
         return "/booking/available";
     }
 
+    /*
+    @PostMapping("/booking/available")
+    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model, HttpSession httpSession) {
+        model.addAttribute("title", "Ledige Autocampere");
+        System.out.println(httpSession.getAttribute("bookingBeingCreated"));
+        BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
+
+        LocalDate periodStartAsDate = LocalDate.parse(periodStart);
+        LocalDate periodEndAsDate = LocalDate.parse(periodEnd);
+
+        bookingBeingCreated.setPeriodStart(periodStartAsDate);
+        bookingBeingCreated.setPeriodEnd(periodEndAsDate);
+
+        Map<Integer, AutocamperDTO> autocamperMap = autocamperDAO.readAllAsMap();
+        List<BookingDTO> bookingList = (List<BookingDTO>) bookingDAO.readAll();
+
+        for(int i = 1; i <= bookingList.size(); i++) {
+            BookingDTO currentBookingDB = bookingList.get(i - 1);
+
+            if((periodStartAsDate.isBefore(currentBookingDB.getPeriodEnd())
+                    && periodEndAsDate.isAfter(currentBookingDB.getPeriodStart()))) {
+
+                autocamperMap.remove(currentBookingDB.getAutocamperId());
+            }
+        }
+
+        model.addAttribute("autocamperList", autocamperMap);
+
+        System.out.println(httpSession.getAttribute("bookingBeingCreated"));
+
+        return "/booking/available";
+    }
+
+     */
+
     @GetMapping("/booking/addAutocamper")
     public String addAutocamper(@RequestParam int id, HttpSession httpSession) {
         BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
@@ -104,7 +142,6 @@ public class BookingController {
                                       @RequestParam int zipCode,
                                       @RequestParam String city,
                                       @RequestParam String address, HttpSession httpSession) {
-
         model.addAttribute("title", "Oversigt");
         BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
 
@@ -124,10 +161,25 @@ public class BookingController {
         return "redirect:/booking/overview";
     }
 
-    @ModelAttribute("bookingBeingCreated")
     @GetMapping("/booking/overview")
-    public String displayBookingOverview() {
+    public String displayBookingOverview(Model model, HttpSession httpSession) {
+        BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
+        model.addAttribute(bookingBeingCreated);
 
         return "/booking/overview";
+    }
+
+    @GetMapping("/booking/list")
+    public String displayBookingList(Model model) {
+        model.addAttribute("title", "Bookinger");
+        model.addAttribute("bookingList", bookingDAO.readAll());
+
+        /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
+        model.addAttribute("customerList", customerDAO.readAll());
+        model.addAttribute("autocamperList", autocamperDAO.readAll());
+
+         */
+
+        return "/booking/list";
     }
 }
