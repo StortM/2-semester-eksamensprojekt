@@ -11,13 +11,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
+@SessionAttributes("bookingBeingCreated")
 @Controller
 public class BookingController {
 
     private AutocamperDAO autocamperDAO;
     private BookingDAO bookingDAO;
     private CustomerDAO customerDAO;
-    private BookingDTO bookingBeingCreated;
+    // private BookingDTO bookingBeingCreated;
 
     public BookingController() throws SQLException {
         autocamperDAO = new AutocamperDAO(DatabaseConnectionManager.getInstance().getDatabaseConnection());
@@ -27,15 +28,12 @@ public class BookingController {
 
     @GetMapping("/booking")
     public String displayChooseDateForm(Model model, HttpSession httpSession) {
+        httpSession.removeAttribute("bookingBeingCreated");
+
+
         model.addAttribute("title", "Vælg Dato");
+        model.addAttribute("bookingBeingCreated", new BookingDTO());
 
-        BookingDTO tempBooking = new BookingDTO();
-        tempBooking.setPriceTotal(8000);
-
-        httpSession.setAttribute("newBooking", tempBooking);
-
-        bookingBeingCreated = new BookingDTO();
-        model.addAttribute("bookingBeingCreated", bookingBeingCreated);
         return "/booking/date";
     }
 
@@ -54,8 +52,9 @@ public class BookingController {
     }
 
     @PostMapping("/booking/available")
-    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model, HttpSession httpSession, SessionStatus sessionStatus) {
+    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model, HttpSession httpSession) {
         model.addAttribute("title", "Ledige Autocampere");
+        BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
 
         LocalDate periodStartAsDate = LocalDate.parse(periodStart);
         LocalDate periodEndAsDate = LocalDate.parse(periodEnd);
@@ -76,19 +75,15 @@ public class BookingController {
             }
         }
 
-        BookingDTO bookingDTO = (BookingDTO) httpSession.getAttribute("newBooking");
-
-        bookingDTO.setPickUp("qtqqtqtqqt");
-        System.out.println(bookingDTO);
-
         model.addAttribute("autocamperList", autocamperMap);
 
         return "/booking/available";
     }
 
     @GetMapping("/booking/addAutocamper")
-    public String addAutocamper(@RequestParam int id) {
-        this.bookingBeingCreated.setAutocamperId(id);
+    public String addAutocamper(@RequestParam int id, HttpSession httpSession) {
+        BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
+        bookingBeingCreated.setAutocamperId(id);
 
         return "redirect:/booking/customer";
     }
@@ -111,6 +106,7 @@ public class BookingController {
                                       @RequestParam String address, HttpSession httpSession) {
 
         model.addAttribute("title", "Oversigt");
+        BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
 
         CustomerDTO customerToBeCreated = new CustomerDTO(firstName, lastName, phone, mail, zipCode, city, address);
         customerDAO.create(customerToBeCreated);
@@ -124,6 +120,13 @@ public class BookingController {
         bookingDAO.create(bookingBeingCreated);
 
         model.addAttribute(bookingBeingCreated);
+
+        return "redirect:/booking/overview";
+    }
+
+    @ModelAttribute("bookingBeingCreated")
+    @GetMapping("/booking/overview")
+    public String displayBookingOverview() {
 
         return "/booking/overview";
     }
