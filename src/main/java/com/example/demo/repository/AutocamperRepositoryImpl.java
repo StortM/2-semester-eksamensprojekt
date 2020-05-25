@@ -1,21 +1,23 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Autocamper;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
+public class AutocamperRepositoryImpl implements IAutocamperRepository {
     private Connection conn;
 
-    public AutocamperDAO(Connection conn){
+    public AutocamperRepositoryImpl(Connection conn){
         this.conn = conn;
     }
 
 
-    public AutocamperDTO read(int id){
-        AutocamperDTO objectToReturn = new AutocamperDTO();
+    public Autocamper read(int id){
+        Autocamper objectToReturn = new Autocamper();
         try {
             //Da autocamper info findes i både autocampers og autocampers_types, så inner joines de på brand og model,
             // da disse er FK i autocampers og PK i autocamper_types
@@ -47,13 +49,13 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
 
     @Override
     //TODO Atm. kan der ikke oprettes nye autocamper_types. Herudover kan der oprettes autocampere uden tilhørende type
-    public void create(AutocamperDTO autocamperDTO) {
+    public void create(Autocamper autocamper) {
         try {
             PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO autocampers " + "(autocamper_type_brand, autocamper_type_model, year, price_day)" + " VALUES (?,?,?,?)");
-            statementToInsert.setString(1, autocamperDTO.getBrand());
-            statementToInsert.setString(2, autocamperDTO.getModel());
-            statementToInsert.setInt(3, autocamperDTO.getYear());
-            statementToInsert.setInt(4, autocamperDTO.getPriceDay());
+            statementToInsert.setString(1, autocamper.getBrand());
+            statementToInsert.setString(2, autocamper.getModel());
+            statementToInsert.setInt(3, autocamper.getYear());
+            statementToInsert.setInt(4, autocamper.getPriceDay());
             //Print for testing
             System.out.println(statementToInsert);
             statementToInsert.executeUpdate();
@@ -65,7 +67,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
 
     @Override
     //TODO atm bliver der ikke lavet noget med autocamper_types. Det er nok simpelt nok at fikse, men jeg er for træt til lige at fixe det
-    public void update(AutocamperDTO autocamperDTO) {
+    public void update(Autocamper autocamper) {
         try{
             PreparedStatement statementToInsert= conn.prepareStatement("UPDATE autocampers SET " +
                     "autocamper_type_brand = ?, " +
@@ -74,11 +76,11 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
                     "price_day = ? " +
                     "WHERE id = ?");
 
-            statementToInsert.setString(1, autocamperDTO.getBrand());
-            statementToInsert.setString(2, autocamperDTO.getModel());
-            statementToInsert.setInt(3, autocamperDTO.getYear());
-            statementToInsert.setInt(4, autocamperDTO.getPriceDay());
-            statementToInsert.setInt(5, autocamperDTO.getId());
+            statementToInsert.setString(1, autocamper.getBrand());
+            statementToInsert.setString(2, autocamper.getModel());
+            statementToInsert.setInt(3, autocamper.getYear());
+            statementToInsert.setInt(4, autocamper.getPriceDay());
+            statementToInsert.setInt(5, autocamper.getId());
 
             statementToInsert.executeUpdate();
         }
@@ -100,8 +102,8 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
     }
 
     @Override
-    public Collection<AutocamperDTO> readAll() {
-        List<AutocamperDTO> autocamperList = new ArrayList<>();
+    public Collection<Autocamper> readAll() {
+        List<Autocamper> autocamperList = new ArrayList<>();
 
         try{
             PreparedStatement statementToQuery = conn.prepareStatement("select *\n" +
@@ -112,7 +114,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
             ResultSet rs = statementToQuery.executeQuery();
 
             while(rs.next()){
-                AutocamperDTO autocamper = new AutocamperDTO();
+                Autocamper autocamper = new Autocamper();
                 autocamper.setId(rs.getInt(1));
                 autocamper.setBrand(rs.getString(2));
                 autocamper.setModel(rs.getString(3));
@@ -131,8 +133,8 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
         return autocamperList;
     }
 
-    public Map<Integer,AutocamperDTO> readAllAsMap() {
-        Map<Integer, AutocamperDTO> autocamperMap = new TreeMap<>();
+    public Map<Integer, Autocamper> readAllAsMap() {
+        Map<Integer, Autocamper> autocamperMap = new TreeMap<>();
 
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("select *\n" +
@@ -143,7 +145,7 @@ public class AutocamperDAO implements CRUDRepository<AutocamperDTO>{
             ResultSet rs = statementToQuery.executeQuery();
 
             while(rs.next()) {
-                AutocamperDTO autocamper = new AutocamperDTO();
+                Autocamper autocamper = new Autocamper();
                 autocamper.setId(rs.getInt(1));
                 autocamper.setBrand(rs.getString(2));
                 autocamper.setModel(rs.getString(3));

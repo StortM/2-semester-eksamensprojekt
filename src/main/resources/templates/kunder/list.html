@@ -22,15 +22,15 @@
                 <th>Adresse</th>
                 <th></th>
             </tr>
-            <tr th:each="customerDTO : ${customerList}">
-                <td th:text="${customerDTO.getId()}"></td>
-                <td th:text="${customerDTO.getFirstName()}"></td>
-                <td th:text="${customerDTO.getLastName()}"></td>
-                <td th:text="${customerDTO.getPhone()}"></td>
-                <td th:text="${customerDTO.getMail()}"></td>
-                <td th:text="${customerDTO.getZipCode()}"></td>
-                <td th:text="${customerDTO.getCity()}"></td>
-                <td th:text="${customerDTO.getAddress()}"></td>
+            <tr th:each="customer : ${customerList}">
+                <td th:text="${customer.getId()}"></td>
+                <td th:text="${customer.getFirstName()}"></td>
+                <td th:text="${customer.getLastName()}"></td>
+                <td th:text="${customer.getPhone()}"></td>
+                <td th:text="${customer.getMail()}"></td>
+                <td th:text="${customer.getZipCode()}"></td>
+                <td th:text="${customer.getCity()}"></td>
+                <td th:text="${customer.getAddress()}"></td>
                 <td>
                     <div class="btn-group">
                         <a href="" class="btn btn-outline-primary " role="button">Rediger</a>

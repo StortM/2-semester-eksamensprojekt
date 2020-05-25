@@ -21,16 +21,16 @@
                 <th>Pris pr. dag</th>
                 <th></th>
             </tr>
-            <tr th:each="autocamperDTO : ${autocamperList}">
-                <td th:text="${autocamperDTO.getValue().getId()}"></td>
-                <td th:text="${autocamperDTO.getValue().getBrand()}"></td>
-                <td th:text="${autocamperDTO.getValue().getModel()}"></td>
-                <td th:text="${autocamperDTO.getValue().getYear()}"></td>
-                <td th:text="${autocamperDTO.getValue().getBeds()}"></td>
-                <td th:text="${autocamperDTO.getValue().getSeats()}"></td>
-                <td th:text="${autocamperDTO.getValue().getPriceDay()}"></td>
+            <tr th:each="autocamper : ${autocamperList}">
+                <td th:text="${autocamper.getValue().getId()}"></td>
+                <td th:text="${autocamper.getValue().getBrand()}"></td>
+                <td th:text="${autocamper.getValue().getModel()}"></td>
+                <td th:text="${autocamper.getValue().getYear()}"></td>
+                <td th:text="${autocamper.getValue().getBeds()}"></td>
+                <td th:text="${autocamper.getValue().getSeats()}"></td>
+                <td th:text="${autocamper.getValue().getPriceDay()}"></td>
                 <td>
-                    <a th:href="@{/booking/addAutocamper(id=${autocamperDTO.getValue().getId()})}" class="btn btn-outline-primary" role="button">Vælg</a>
+                    <a th:href="@{/booking/addAutocamper(id=${autocamper.getValue().getId()})}" class="btn btn-outline-primary" role="button">Vælg</a>
                 </td>
             </tr>
         </table>

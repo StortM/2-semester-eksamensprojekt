@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.model;
 
-public class CustomerDTO {
+public class Customer {
     private int id;
     private String firstName;
     private String lastName;
@@ -10,11 +10,11 @@ public class CustomerDTO {
     private String city;
     private String address;
 
-    public CustomerDTO() {
+    public Customer() {
         // default empty
     }
 
-    public CustomerDTO(int id, String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
+    public Customer(int id, String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,7 +26,7 @@ public class CustomerDTO {
     }
 
     // Constructor uden id da vi lader DB håndterer tildeling af id til hvert entry
-    public CustomerDTO(String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
+    public Customer(String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;

@@ -1,30 +1,32 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Booking;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BookingDAO implements CRUDRepository<BookingDTO> {
+public class BookingRepositoryImpl implements ICRUDRepository<Booking> {
     private Connection conn;
 
-    public BookingDAO(Connection conn) {
+    public BookingRepositoryImpl(Connection conn) {
         this.conn = conn;
     }
 
     @Override
-    public void create(BookingDTO bookingDTO) {
+    public void create(Booking booking) {
         try{
             PreparedStatement statementToInsert = conn.prepareStatement("INSERT INTO bookings (autocamper_id, customer_id, period_start, period_end, dropoff, pickup, price_total) " +
                     " VALUES (?,?,?,?,?,?,?)");
-            statementToInsert.setInt(1,bookingDTO.getAutocamperId());
-            statementToInsert.setInt(2,bookingDTO.getCustomerId());
-            statementToInsert.setDate(3, Date.valueOf(bookingDTO.getPeriodStart()));
-            statementToInsert.setDate(4, Date.valueOf(bookingDTO.getPeriodEnd()));
-            statementToInsert.setString(5, bookingDTO.getDropOff());
-            statementToInsert.setString(6, bookingDTO.getPickUp());
-            statementToInsert.setInt(7, bookingDTO.getPriceTotal());
+            statementToInsert.setInt(1, booking.getAutocamperId());
+            statementToInsert.setInt(2, booking.getCustomerId());
+            statementToInsert.setDate(3, Date.valueOf(booking.getPeriodStart()));
+            statementToInsert.setDate(4, Date.valueOf(booking.getPeriodEnd()));
+            statementToInsert.setString(5, booking.getDropOff());
+            statementToInsert.setString(6, booking.getPickUp());
+            statementToInsert.setInt(7, booking.getPriceTotal());
 
             statementToInsert.executeUpdate();
         }
@@ -34,8 +36,8 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
     }
 
     @Override
-    public BookingDTO read(int id) {
-        BookingDTO bookingToReturn = new BookingDTO();
+    public Booking read(int id) {
+        Booking bookingToReturn = new Booking();
 
         try{
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM bookings WHERE id=?");
@@ -59,7 +61,7 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
     }
 
     @Override
-    public void update(BookingDTO bookingDTO) {
+    public void update(Booking booking) {
             try {
                 PreparedStatement statementToExecute = conn.prepareStatement("UPDATE bookings SET " +
                         "autocamper_id = ?, " +
@@ -71,13 +73,13 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
                         "price_total = ?" +
                         "WHERE id = ?");
 
-                statementToExecute.setInt(1,bookingDTO.getAutocamperId());
-                statementToExecute.setInt(2,bookingDTO.getCustomerId());
-                statementToExecute.setDate(3,Date.valueOf(bookingDTO.getPeriodStart()));
-                statementToExecute.setDate(4,Date.valueOf(bookingDTO.getPeriodEnd()));
-                statementToExecute.setString(5,bookingDTO.getDropOff());
-                statementToExecute.setString(6,bookingDTO.getPickUp());
-                statementToExecute.setInt(7,bookingDTO.getPriceTotal());
+                statementToExecute.setInt(1, booking.getAutocamperId());
+                statementToExecute.setInt(2, booking.getCustomerId());
+                statementToExecute.setDate(3,Date.valueOf(booking.getPeriodStart()));
+                statementToExecute.setDate(4,Date.valueOf(booking.getPeriodEnd()));
+                statementToExecute.setString(5, booking.getDropOff());
+                statementToExecute.setString(6, booking.getPickUp());
+                statementToExecute.setInt(7, booking.getPriceTotal());
 
                 statementToExecute.executeUpdate();
 
@@ -100,15 +102,15 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
     }
 
     @Override
-    public Collection<BookingDTO> readAll() {
-        List<BookingDTO> bookingsList = new ArrayList<>();
+    public Collection<Booking> readAll() {
+        List<Booking> bookingsList = new ArrayList<>();
 
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM bookings");
             ResultSet rs = statementToQuery.executeQuery();
 
             while(rs.next()) {
-                BookingDTO tempBooking = new BookingDTO();
+                Booking tempBooking = new Booking();
                 tempBooking.setId(rs.getInt(1));
                 tempBooking.setAutocamperId(rs.getInt(2));
                 tempBooking.setCustomerId(rs.getInt(3));
@@ -131,8 +133,8 @@ public class BookingDAO implements CRUDRepository<BookingDTO> {
     /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
     som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden
  */
-    public BookingDTO readLast() {
-        BookingDTO bookingToReturn = new BookingDTO();
+    public Booking readLast() {
+        Booking bookingToReturn = new Booking();
 
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM bookings ORDER BY id", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
