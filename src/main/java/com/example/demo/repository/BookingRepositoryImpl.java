@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BookingRepositoryImpl implements ICRUDRepository<Booking> {
+public class BookingRepositoryImpl implements IBookingRepository {
     private Connection conn;
 
     public BookingRepositoryImpl(Connection conn) {

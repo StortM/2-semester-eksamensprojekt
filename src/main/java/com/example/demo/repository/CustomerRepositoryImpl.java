@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CustomerRepositoryImpl implements ICRUDRepository<Customer> {
+public class CustomerRepositoryImpl implements ICustomerRepository {
     private Connection conn;
 
     public CustomerRepositoryImpl(Connection conn) {
