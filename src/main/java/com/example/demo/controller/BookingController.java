@@ -105,11 +105,34 @@ public class BookingController {
 
         bookingBeingCreated.setCustomerId(customerToBeCreated.getId());
 
+        model.addAttribute(bookingBeingCreated);
+
+        return "redirect:/booking/locations";
+    }
+
+    @GetMapping("/booking/locations")
+    public String displayLocationsForm(Model model) {
+        model.addAttribute("title", "Tilføj lokationer");
+
+        return "/booking/locations";
+    }
+
+    @PostMapping("/booking/locations")
+    public String processLocationsForm(Model model,
+                                      @RequestParam String pickUp,
+                                      @RequestParam String dropOff,
+                                      HttpSession httpSession) {
+        model.addAttribute("title", "Oversigt");
+        Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
+
+        bookingBeingCreated.setPickUp(pickUp);
+        bookingBeingCreated.setDropOff(dropOff);
+
+        model.addAttribute(bookingBeingCreated);
+
         int bookingId = bookingRepository.readLast().getId() + 1;
         bookingBeingCreated.setId(bookingId);
         bookingRepository.create(bookingBeingCreated);
-
-        model.addAttribute(bookingBeingCreated);
 
         return "redirect:/booking/overview";
     }
