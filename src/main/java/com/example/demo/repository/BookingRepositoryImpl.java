@@ -102,7 +102,7 @@ public class BookingRepositoryImpl implements IBookingRepository {
     }
 
     @Override
-    public Collection<Booking> readAll() {
+    public List<Booking> readAll() {
         List<Booking> bookingsList = new ArrayList<>();
 
         try {

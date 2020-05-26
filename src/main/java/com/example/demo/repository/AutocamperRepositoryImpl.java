@@ -102,7 +102,7 @@ public class AutocamperRepositoryImpl implements IAutocamperRepository {
     }
 
     @Override
-    public Collection<Autocamper> readAll() {
+    public List<Autocamper> readAll() {
         List<Autocamper> autocamperList = new ArrayList<>();
 
         try{

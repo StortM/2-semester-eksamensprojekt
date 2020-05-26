@@ -16,28 +16,16 @@ import java.time.LocalDate;
 public class BookingController {
 
     // private IAutocamperRepository autocamperRepository;
-    private IBookingRepository bookingRepository;
-    private ICustomerRepository customerRepository;
+    private IBookingService bookingService;
+    private ICustomerService customerService;
     private IAutocamperService autocamperService;
 
     public BookingController() throws SQLException {
         // autocamperRepository = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
-        bookingRepository = new BookingRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
-        customerRepository = new CustomerRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        bookingService = new BookingServiceImpl();
+        customerService = new CustomerServiceImpl();
         autocamperService = new AutocamperServiceImpl();
     }
-
-    /*
-    @ModelAttribute("bookingBeingCreated")
-    public BookingDTO addBookingToSession() {
-
-        BookingDTO bookingDTO = new BookingDTO();
-
-        bookingDTO.setPickUp("hej med dig");
-
-        return bookingDTO;
-    }
-     */
 
     @GetMapping("/booking")
     public String initializeBookingProcess(HttpSession httpSession) {
@@ -66,7 +54,7 @@ public class BookingController {
         bookingBeingCreated.setPeriodStart(periodStartAsLocalDate);
         bookingBeingCreated.setPeriodEnd(periodEndAsLocalDate);
 
-        model.addAttribute("filteredAutocamperMap", autocamperService.getSortedListByPeriod(periodStartAsLocalDate, periodEndAsLocalDate));
+        model.addAttribute("filteredAutocamperMap", autocamperService.getFilteredMapByPeriod(periodStartAsLocalDate, periodEndAsLocalDate));
 
         return "/booking/available";
     }
@@ -99,15 +87,15 @@ public class BookingController {
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
 
         Customer customerToBeCreated = new Customer(firstName, lastName, phone, mail, zipCode, city, address);
-        customerRepository.create(customerToBeCreated);
+        customerService.add(customerToBeCreated);
 
-        customerToBeCreated.setId(customerRepository.readLast().getId());
+        customerToBeCreated.setId(customerService.getLast().getId());
 
         bookingBeingCreated.setCustomerId(customerToBeCreated.getId());
 
-        int bookingId = bookingRepository.readLast().getId() + 1;
+        int bookingId = bookingService.getLast().getId() + 1;
         bookingBeingCreated.setId(bookingId);
-        bookingRepository.create(bookingBeingCreated);
+        bookingService.add(bookingBeingCreated);
 
         model.addAttribute(bookingBeingCreated);
 
@@ -125,7 +113,7 @@ public class BookingController {
     @GetMapping("/booking/list")
     public String displayBookingList(Model model) {
         model.addAttribute("title", "Bookinger");
-        model.addAttribute("bookingList", bookingRepository.readAll());
+        model.addAttribute("bookingList", bookingService.getAll());
 
         /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
         model.addAttribute("customerList", customerDAO.readAll());

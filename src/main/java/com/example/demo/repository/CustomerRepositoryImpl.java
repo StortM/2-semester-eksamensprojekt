@@ -103,7 +103,7 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
     }
 
     @Override
-    public Collection<Customer> readAll() {
+    public List<Customer> readAll() {
         List<Customer> customerList = new ArrayList<>();
         try {
             PreparedStatement statementToQuery = conn.prepareStatement("SELECT * FROM customers");

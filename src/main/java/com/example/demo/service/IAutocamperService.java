@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface IAutocamperService extends IService<Autocamper>{
 
-    Map<Integer, Autocamper> getSortedListByPeriod(LocalDate periodStart, LocalDate periodEnd);
+    Map<Integer, Autocamper> getFilteredMapByPeriod(LocalDate periodStart, LocalDate periodEnd);
 }
