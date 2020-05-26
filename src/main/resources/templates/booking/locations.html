@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: head">
+</head>
+<body>
+<nav th:insert="fragments.html :: navbar"></nav>
+
+<div class="container">
+    <div class="content" style="width: 400px; margin: 0 auto;">
+        <h1>Vælg pick-up og drop-off</h1>
+        <br>
+        <form method="post">
+            <div class="form-group-row">
+                <div class="mx-auto">
+                    <label class="col-form-label font-weight-bold" for="pickUp">Pick-up</label>
+                    <input class="form-control" id="pickUp" name="pickUp" type="text"/>
+                </div>
+                <div class="mx-auto">
+                    <label class="col-form-label font-weight-bold" for="dropOff">Drop-off</label>
+                    <input class="form-control" id="dropOff" name="dropOff" type="text"/>
+                </div>
+            </div>
+            <br>
+            <input class="btn btn-outline-primary" name="submit" type="submit" value="Tilføj"/>
+        </form>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script th:src="@{/js/bootstrap.min.js}" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>
