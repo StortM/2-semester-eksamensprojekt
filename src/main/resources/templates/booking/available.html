@@ -21,7 +21,7 @@
                 <th>Pris pr. dag</th>
                 <th></th>
             </tr>
-            <tr th:each="autocamper : ${autocamperList}">
+            <tr th:each="autocamper : ${filteredAutocamperMap}">
                 <td th:text="${autocamper.getValue().getId()}"></td>
                 <td th:text="${autocamper.getValue().getBrand()}"></td>
                 <td th:text="${autocamper.getValue().getModel()}"></td>

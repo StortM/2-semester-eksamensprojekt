@@ -6,25 +6,25 @@ import com.example.demo.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.*;
 
 @SessionAttributes("bookingBeingCreated")
 @Controller
 public class BookingController {
 
-    private IAutocamperRepository autocamperRepository;
+    // private IAutocamperRepository autocamperRepository;
     private IBookingRepository bookingRepository;
     private ICustomerRepository customerRepository;
+    private IAutocamperService autocamperService;
 
     public BookingController() throws SQLException {
-        autocamperRepository = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        // autocamperRepository = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
         bookingRepository = new BookingRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
         customerRepository = new CustomerRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        autocamperService = new AutocamperServiceImpl();
     }
 
     /*
@@ -60,64 +60,16 @@ public class BookingController {
         model.addAttribute("title", "Ledige Autocampere");
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
 
-        LocalDate periodStartAsDate = LocalDate.parse(periodStart);
-        LocalDate periodEndAsDate = LocalDate.parse(periodEnd);
+        LocalDate periodStartAsLocalDate = LocalDate.parse(periodStart);
+        LocalDate periodEndAsLocalDate = LocalDate.parse(periodEnd);
 
-        bookingBeingCreated.setPeriodStart(periodStartAsDate);
-        bookingBeingCreated.setPeriodEnd(periodEndAsDate);
+        bookingBeingCreated.setPeriodStart(periodStartAsLocalDate);
+        bookingBeingCreated.setPeriodEnd(periodEndAsLocalDate);
 
-        Map<Integer, Autocamper> autocamperMap = autocamperRepository.readAllAsMap();
-        List<Booking> bookingList = (List<Booking>) bookingRepository.readAll();
-
-        for(int i = 1; i <= bookingList.size(); i++) {
-            Booking currentBookingDB = bookingList.get(i - 1);
-
-            if((periodStartAsDate.isBefore(currentBookingDB.getPeriodEnd())
-                    && periodEndAsDate.isAfter(currentBookingDB.getPeriodStart()))) {
-
-                autocamperMap.remove(currentBookingDB.getAutocamperId());
-            }
-        }
-
-        model.addAttribute("autocamperList", autocamperMap);
+        model.addAttribute("filteredAutocamperMap", autocamperService.getSortedListByPeriod(periodStartAsLocalDate, periodEndAsLocalDate));
 
         return "/booking/available";
     }
-
-    /*
-    @PostMapping("/booking/available")
-    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model, HttpSession httpSession) {
-        model.addAttribute("title", "Ledige Autocampere");
-        System.out.println(httpSession.getAttribute("bookingBeingCreated"));
-        BookingDTO bookingBeingCreated = (BookingDTO) httpSession.getAttribute("bookingBeingCreated");
-
-        LocalDate periodStartAsDate = LocalDate.parse(periodStart);
-        LocalDate periodEndAsDate = LocalDate.parse(periodEnd);
-
-        bookingBeingCreated.setPeriodStart(periodStartAsDate);
-        bookingBeingCreated.setPeriodEnd(periodEndAsDate);
-
-        Map<Integer, AutocamperDTO> autocamperMap = autocamperDAO.readAllAsMap();
-        List<BookingDTO> bookingList = (List<BookingDTO>) bookingDAO.readAll();
-
-        for(int i = 1; i <= bookingList.size(); i++) {
-            BookingDTO currentBookingDB = bookingList.get(i - 1);
-
-            if((periodStartAsDate.isBefore(currentBookingDB.getPeriodEnd())
-                    && periodEndAsDate.isAfter(currentBookingDB.getPeriodStart()))) {
-
-                autocamperMap.remove(currentBookingDB.getAutocamperId());
-            }
-        }
-
-        model.addAttribute("autocamperList", autocamperMap);
-
-        System.out.println(httpSession.getAttribute("bookingBeingCreated"));
-
-        return "/booking/available";
-    }
-
-     */
 
     @GetMapping("/booking/addAutocamper")
     public String addAutocamper(@RequestParam int id, HttpSession httpSession) {
@@ -177,7 +129,7 @@ public class BookingController {
 
         /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
         model.addAttribute("customerList", customerDAO.readAll());
-        model.addAttribute("autocamperList", autocamperDAO.readAll());
+        model.addAttribute("filteredAutocamperMap", autocamperDAO.readAll());
 
          */
 
