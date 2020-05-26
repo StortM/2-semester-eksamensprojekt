@@ -74,6 +74,22 @@ public class BookingController {
         return "/booking/customer";
     }
 
+    @GetMapping("/booking/existingCustomer")
+    public String displayCustomerList(Model model) {
+        model.addAttribute("title", "Tilføj Kunde");
+        model.addAttribute("extend", "yes");
+        model.addAttribute("customerList", customerService.getAll());
+
+        return "/kunder/list";
+    }
+
+    @GetMapping("/booking/customerProcessExisting")
+    public String processCustomerExisting(@RequestParam int id) {
+        System.out.println(customerService.get(id));
+
+        return "redirect:/booking";
+    }
+
     @PostMapping("/booking/customer")
     public String processCustomerForm(Model model,
                                       @RequestParam String firstName,
@@ -101,7 +117,7 @@ public class BookingController {
 
     @GetMapping("/booking/locations")
     public String displayLocationsForm(Model model) {
-        model.addAttribute("title", "Tilføj lokationer");
+        model.addAttribute("title", "Tilføj Pick-up og Drop-off");
 
         return "/booking/locations";
     }
@@ -138,12 +154,6 @@ public class BookingController {
     public String displayBookingList(Model model) {
         model.addAttribute("title", "Bookinger");
         model.addAttribute("bookingList", bookingService.getAll());
-
-        /* Kan bruges hvis man vil tilføje kunde navn og lign. til tabellen
-        model.addAttribute("customerList", customerDAO.readAll());
-        model.addAttribute("filteredAutocamperMap", autocamperDAO.readAll());
-
-         */
 
         return "/booking/list";
     }

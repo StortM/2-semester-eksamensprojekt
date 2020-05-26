@@ -32,7 +32,10 @@
                 <td th:text="${customer.getCity()}"></td>
                 <td th:text="${customer.getAddress()}"></td>
                 <td>
-                    <div class="btn-group">
+                    <div th:if="${extend == 'yes'}" class="btn-group">
+                        <a th:href="@{/booking/customerProcessExisting(id=${customer.getId()})}" class="btn btn-outline-primary " role="button">Vælg</a>
+                    </div>
+                    <div th:if="${extend == null}" class="btn-group">
                         <a href="" class="btn btn-outline-primary " role="button">Rediger</a>
                         <a href="" class="btn btn-outline-danger" role="button">Slet</a>
                     </div>
