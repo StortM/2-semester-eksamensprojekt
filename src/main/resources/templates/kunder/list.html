@@ -33,7 +33,11 @@
                 <td th:text="${customer.getAddress()}"></td>
                 <td>
                     <div th:if="${bookingInProgress == 'yes'}" class="btn-group">
-                        <a th:href="@{/booking/customerProcessExisting(id=${customer.getId()})}" class="btn btn-outline-primary " role="button">Vælg</a>
+                        <form action="#" th:action="@{/booking/new/customerExisting}" method="post">
+                            <input type="hidden" name="id" id="id" th:value="${customer.getId()}">
+                            <button class="btn btn-outline-primary" name="submit" type="submit" value="Vælg">Vælg</button>
+                        </form>
+                        <!---<a th:href="@{/booking/new/customerProcessExisting(id=${customer.getId()})}" class="btn btn-outline-primary " role="button">Vælg</a>-->
                     </div>
                     <div th:if="${bookingInProgress == null}" class="btn-group">
                         <a href="" class="btn btn-outline-primary " role="button">Rediger</a>

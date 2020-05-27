@@ -8,15 +8,8 @@
 
 <div class="container">
     <div class="content">
-        <h1>Booking</h1>
-        <p>Booking ID: <span th:text="${booking.id}"></span></p>
-        <p>Autocamper ID: <span th:text="${booking.autocamperId}"></span></p>
-        <p>Kunde ID: <span th:text="${booking.customerId}"></span></p>
-        <p>Fra: <span th:text="${booking.periodStart}"></span></p>
-        <p>Til: <span th:text="${booking.periodEnd}"></span></p>
-        <p>Pick-up: <span th:text="${booking.pickUp}"></span></p>
-        <p>Drop-off: <span th:text="${booking.dropOff}"></span></p>
-        <p>Total Pris: <span th:text="${booking.priceTotal}"></span></p>
+        <h1 class="text-success">Booking Oprettet!</h1>
+        <p>Booking med id <span class="font-weight-bold" th:text="${booking.id}">id ikke fundet</span> blev oprettet successfuldt.</p>
     </div>
 </div>
 

@@ -1,14 +1,30 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Autocamper;
 import com.example.demo.model.Booking;
 import com.example.demo.repository.RepositoryManager;
 
 import java.sql.SQLException;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class BookingServiceImpl implements IBookingService {
 
     public BookingServiceImpl() {
+    }
+
+    @Override
+    public int getTotalPrice(Booking booking) {
+        int priceDay = 0;
+        int numberOfDays = (int) ChronoUnit.DAYS.between(booking.getPeriodStart(), booking.getPeriodEnd());
+
+        try {
+            priceDay = RepositoryManager.getInstance().getAutocamperRepository().read(booking.getAutocamperId()).getPriceDay();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return priceDay * numberOfDays;
     }
 
     @Override
