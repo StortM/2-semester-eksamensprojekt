@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.repository.AutocamperRepositoryImpl;
 import com.example.demo.repository.DatabaseConnectionManager;
+import com.example.demo.service.AutocamperServiceImpl;
+import com.example.demo.service.IAutocamperService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,16 +12,16 @@ import java.sql.SQLException;
 
 @Controller
 public class AutocamperController {
-    AutocamperRepositoryImpl autocamperRepositoryImpl;
+    IAutocamperService autocamperService;
 
     public AutocamperController() throws SQLException {
-        autocamperRepositoryImpl = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
+        autocamperService = new AutocamperServiceImpl();
     }
 
     @GetMapping("/autocampere")
-    public String displayCustomerList(Model model) {
+    public String displayAutocamperList(Model model) {
         model.addAttribute("title", "Autocampere");
-        model.addAttribute("autocamperList", autocamperRepositoryImpl.readAll());
+        model.addAttribute("autocamperList", autocamperService.getAll());
 
         return "/autocampere/list";
     }

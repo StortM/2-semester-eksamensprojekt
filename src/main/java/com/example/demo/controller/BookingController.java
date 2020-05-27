@@ -6,12 +6,13 @@ import com.example.demo.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-@SessionAttributes("bookingBeingCreated")
+@SessionAttributes({"bookingBeingCreated", "filteredAutocamperMap"})
 @Controller
 public class BookingController {
 
@@ -21,31 +22,40 @@ public class BookingController {
     private IAutocamperService autocamperService;
 
     public BookingController() throws SQLException {
-        // autocamperRepository = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
         bookingService = new BookingServiceImpl();
         customerService = new CustomerServiceImpl();
         autocamperService = new AutocamperServiceImpl();
     }
 
+    /*
+    Step 1: Fjern sessionAttributes for at der ikke opereres på gammel data
+     */
     @GetMapping("/booking")
     public String initializeBookingProcess(HttpSession httpSession) {
         httpSession.removeAttribute("bookingBeingCreated");
+        httpSession.removeAttribute("filteredAutocamperMap");
 
         return "redirect:/booking/date";
     }
 
+    /*
+    Step 2: Kunden præsenteres for en form hvor der kan indtastes fra og til dato for bookingen
+     */
     @GetMapping("/booking/date")
-    public String displayChooseDateForm(Model model, HttpSession httpSession) {
-
+    public String displayChooseDateForm(Model model) {
         model.addAttribute("title", "Vælg Dato");
         model.addAttribute("bookingBeingCreated", new Booking());
 
         return "/booking/date";
     }
 
-    @PostMapping("/booking/available")
-    public String displayAvailableAutocampersList(@RequestParam String periodStart, @RequestParam String periodEnd, Model model, HttpSession httpSession) {
-        model.addAttribute("title", "Ledige Autocampere");
+    /*
+    Step 2.1: Indtastede datoer gemmes i booking objektet fra sessionen.
+              Filtreret map over ledige autocampers for den givne periode
+              hentes ved hjælp fra servicelaget.
+     */
+    @PostMapping("/booking/date")
+    public String processDateForm(@RequestParam String periodStart, @RequestParam String periodEnd, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
 
         LocalDate periodStartAsLocalDate = LocalDate.parse(periodStart);
@@ -54,15 +64,31 @@ public class BookingController {
         bookingBeingCreated.setPeriodStart(periodStartAsLocalDate);
         bookingBeingCreated.setPeriodEnd(periodEndAsLocalDate);
 
-        model.addAttribute("filteredAutocamperMap", autocamperService.getFilteredMapByPeriod(periodStartAsLocalDate, periodEndAsLocalDate));
+        redirectAttributes.addFlashAttribute(("filteredAutocamperMap"), autocamperService.getFilteredMapByPeriod(periodStartAsLocalDate, periodEndAsLocalDate));
+
+        return "redirect:/booking/autocampers";
+    }
+
+    /*
+    Step 3: Systemet viser listen fra det forrige trin.
+     */
+
+    // Spring injecter automatisk redirectAttributes til modellen
+    @GetMapping("/booking/autocampers")
+    public String displayAvailableAutocampersList(Model model) {
+        model.addAttribute("title", "Ledige Autocampere");
 
         return "/booking/available";
     }
 
+    /*
+    Step 3.1
+     */
     @GetMapping("/booking/addAutocamper")
-    public String addAutocamper(@RequestParam int id, HttpSession httpSession) {
-        Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
+    public String addAutocamper(@ModelAttribute Booking bookingBeingCreated, @RequestParam int id, HttpSession httpSession) {
         bookingBeingCreated.setAutocamperId(id);
+        System.out.println(id);
+        System.out.println(bookingBeingCreated);
 
         return "redirect:/booking/customer";
     }
@@ -72,22 +98,6 @@ public class BookingController {
         model.addAttribute("title", "Tilføj Kunde");
 
         return "/booking/customer";
-    }
-
-    @GetMapping("/booking/existingCustomer")
-    public String displayCustomerList(Model model) {
-        model.addAttribute("title", "Tilføj Kunde");
-        model.addAttribute("extend", "yes");
-        model.addAttribute("customerList", customerService.getAll());
-
-        return "/kunder/list";
-    }
-
-    @GetMapping("/booking/customerProcessExisting")
-    public String processCustomerExisting(@RequestParam int id) {
-        System.out.println(customerService.get(id));
-
-        return "redirect:/booking";
     }
 
     @PostMapping("/booking/customer")
@@ -113,6 +123,22 @@ public class BookingController {
         model.addAttribute(bookingBeingCreated);
 
         return "redirect:/booking/locations";
+    }
+
+    @GetMapping("/booking/existingCustomer")
+    public String displayCustomerList(Model model) {
+        model.addAttribute("title", "Tilføj Kunde");
+        model.addAttribute("bookingInProgress", "yes");
+        model.addAttribute("customerList", customerService.getAll());
+
+        return "/kunder/list";
+    }
+
+    @GetMapping("/booking/customerProcessExisting")
+    public String processCustomerExisting(@RequestParam int id) {
+        System.out.println(customerService.get(id));
+
+        return "redirect:/booking";
     }
 
     @GetMapping("/booking/locations")
@@ -146,6 +172,8 @@ public class BookingController {
     public String displayBookingOverview(Model model, HttpSession httpSession) {
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
         model.addAttribute(bookingBeingCreated);
+
+        System.out.println("endelig booking: " + bookingBeingCreated);
 
         return "/booking/overview";
     }
