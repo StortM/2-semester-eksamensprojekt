@@ -6,6 +6,21 @@
 <body>
 <nav th:insert="fragments.html :: navbar"></nav>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="margin-bottom: 0">
+        <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+        <li class="breadcrumb-item"><a href="/booking/new/date">Dato</a></li>
+        <li class="breadcrumb-item"><a href="/booking/new/autocamper">Vælg autocamper</a></li>
+        <li class="breadcrumb-item"><a href="/booking/new/customer">Kunde</a></li>
+        <li class="breadcrumb-item"><a href="/booking/new/locations">Pick-up og drop-off</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Oversigt</li>
+    </ol>
+</nav>
+
+<div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 83.33%;" aria-valuenow="83.33%" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
 <div class="container">
     <div class="content">
         <h1>Booking Overblik</h1>
