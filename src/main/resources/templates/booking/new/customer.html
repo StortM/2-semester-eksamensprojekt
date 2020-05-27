@@ -6,11 +6,24 @@
 <body>
 <nav th:insert="fragments.html :: navbar"></nav>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="margin-bottom: 0">
+        <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+        <li class="breadcrumb-item"><a href="/booking/new/date">Dato</a></li>
+        <li class="breadcrumb-item"><a href="/booking/new/autocamper">Vælg autocamper</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Kunde</li>
+    </ol>
+</nav>
+
+<div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%;" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
 <div class="container">
     <div class="content" style="width: 400px; margin: 0 auto;">
         <h1>Kundeinformationer</h1>
         <br>
-        <form method="post">
+        <form method="post" autocomplete="on">
             <div class="form-group-row">
                 <div class="mx-auto">
                     <label class="col-form-label font-weight-bold" for="firstName">Fornavn</label>

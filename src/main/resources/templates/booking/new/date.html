@@ -6,6 +6,16 @@
 <body>
 <nav th:insert="fragments.html :: navbar"></nav>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="margin-bottom: 0">
+        <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dato</li>
+    </ol>
+</nav>
+<div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 16.67%;" aria-valuenow="16.67%" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
 <div class="container">
     <div class="content">
         <h1>Vælg Dato for booking</h1>
