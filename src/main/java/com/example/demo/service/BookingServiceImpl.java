@@ -14,6 +14,12 @@ public class BookingServiceImpl implements IBookingService {
     }
 
     @Override
+    public int calculateBookingId() {
+
+        return getLast().getId() + 1;
+    }
+
+    @Override
     public int getTotalPrice(Booking booking) {
         int priceDay = 0;
         int numberOfDays = (int) ChronoUnit.DAYS.between(booking.getPeriodStart(), booking.getPeriodEnd());

@@ -5,6 +5,7 @@ import com.example.demo.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,9 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.TreeMap;
 
+/*
+    bookingBeingCreated og filteredAutocamperMap tilføjes som keys til
+ */
 @SessionAttributes({"bookingBeingCreated", "filteredAutocamperMap"})
 @Controller
 public class BookingController {
@@ -218,8 +222,6 @@ public class BookingController {
         bookingBeingCreated.setPriceTotal(bookingService.getTotalPrice(bookingBeingCreated));
         model.addAttribute(bookingBeingCreated);
 
-        System.out.println("endelig booking: " + bookingBeingCreated);
-
         return "/booking/new/overview";
     }
 
@@ -231,15 +233,17 @@ public class BookingController {
             og kan nu hentes frem igen på et senere tidspunkt.
      */
     @GetMapping("/booking/new/complete")
-    public String displayBookingCompleted(Model model, HttpSession httpSession) {
+    public String displayBookingCompleted(Model model, HttpSession httpSession, SessionStatus sessionStatus) {
         model.addAttribute("title", "Booking Oprettet");
 
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
+
+        bookingBeingCreated.setId(bookingService.calculateBookingId());
+        bookingService.add(bookingBeingCreated);
+
         model.addAttribute(bookingBeingCreated);
 
-        int bookingId = bookingService.getLast().getId() + 1;
-        bookingBeingCreated.setId(bookingId);
-        bookingService.add(bookingBeingCreated);
+        sessionStatus.setComplete();
 
         return "/booking/new/complete";
     }
