@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.TreeMap;
 
 /*
@@ -72,7 +71,6 @@ public class BookingController {
         bookingBeingCreated.setPeriodStart(periodStartAsLocalDate);
         bookingBeingCreated.setPeriodEnd(periodEndAsLocalDate);
 
-
         redirectAttributes.addFlashAttribute(("filteredAutocamperMap"), autocamperService.getFilteredMapByPeriod(periodStartAsLocalDate, periodEndAsLocalDate));
 
         return "redirect:/booking/new/autocamper";
@@ -91,7 +89,7 @@ public class BookingController {
             fra metoden der redirecter, til metoden som redirectionen er mappet til.
      */
     @GetMapping("/booking/new/autocamper")
-    public String displayAvailableAutocampers(Model model, @ModelAttribute("filteredAutocamperMap") Map<Integer, Autocamper> filteredAutocamperMap) {
+    public String displayAvailableAutocampers(Model model) {
         model.addAttribute("title", "Ledige Autocampere");
 
         return "/booking/new/available";
@@ -141,12 +139,7 @@ public class BookingController {
         model.addAttribute("title", "Oversigt");
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
 
-        Customer customerToBeCreated = new Customer(firstName, lastName, phone, mail, zipCode, city, address);
-        customerService.add(customerToBeCreated);
-
-        customerToBeCreated.setId(customerService.getLast().getId());
-
-        bookingBeingCreated.setCustomerId(customerToBeCreated.getId());
+        bookingBeingCreated.setCustomerId(customerService.generateCustomerFromCustomerForm(firstName, lastName, phone, mail, zipCode, city, address).getId());
 
         model.addAttribute(bookingBeingCreated);
 
