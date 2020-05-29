@@ -12,6 +12,15 @@ public class CustomerServiceImpl implements ICustomerService {
 
     }
 
+    public Customer generateCustomerFromCustomerForm(String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
+        Customer customerToBeCreated = new Customer(firstName, lastName, phone, mail, zipCode, city, address);
+        add(customerToBeCreated);
+
+        customerToBeCreated.setId(getLast().getId());
+
+        return customerToBeCreated;
+    }
+
     @Override
     public void add(Customer customer) {
         try {
