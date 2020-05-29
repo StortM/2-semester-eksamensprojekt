@@ -25,30 +25,28 @@
         </div>
         </div>
 
-        <div class="content">
+        <div class="content" style="padding-top: 0">
         <ul class="list-group list-unstyled">
-            <p class="font-weight-bold">Autocamper ID: </p>
         <li class="">
-            <p th:text="${booking.autocamperId}"></p>
-        </li>
-            <p class="font-weight-bold">Kunde ID: </p>
-        <li class="">
-            <span th:text="${booking.customerId}"></span>
+            <p class="font-weight-bold">Autocamper ID: <span class="font-weight-normal" th:text="${booking.autocamperId}"></span></p>
         </li>
         <li class="">
-            <p class="font-weight-bold">Fra: </p><span th:text="${booking.periodStart}"></span>
+            <p class="font-weight-bold">Kunde ID: <span class="font-weight-normal" th:text="${booking.customerId}"></span> </p>
         </li>
         <li class="">
-            <p class="font-weight-bold">Til: </p><span th:text="${booking.periodEnd}"></span>
+            <p class="font-weight-bold">Fra: <span class="font-weight-normal" th:text="${booking.periodStart}"></span></p>
         </li>
         <li class="">
-            <p class="font-weight-bold">Pick-up: </p><span th:text="${booking.pickUp}"></span>
+            <p class="font-weight-bold">Til: <span class="font-weight-normal" th:text="${booking.periodEnd}"></span></p>
         </li>
         <li class="">
-            <p class="font-weight-bold">Drop-off: </p><span th:text="${booking.dropOff}"></span>
+            <p class="font-weight-bold">Pick-up: <span class="font-weight-normal" th:text="${booking.pickUp}"></span></p>
+        </li>
+        <li class="">
+            <p class="font-weight-bold">Drop-off: <span class="font-weight-normal" th:text="${booking.dropOff}"></span></p>
         </li>
         <li class="-item">
-            <p class="font-weight-bold">Total Pris: </p><span th:text="${booking.priceTotal}"></span>
+            <p class="font-weight-bold">Total Pris: <span class="font-weight-normal" th:text="${booking.priceTotal}"></span></p>
         </li>
         </ul>
 

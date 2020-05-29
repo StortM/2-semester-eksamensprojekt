@@ -7,7 +7,7 @@
 <nav th:insert="fragments.html :: navbar"></nav>
 
 <div class="container">
-    <div class="content" style="width: 400px; margin: 0 auto;">
+    <div class="content" style="min-width: 400px; margin: 0 auto; text-align: center">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="margin-bottom: 0">
                 <li class="breadcrumb-item"><a href="/">Hjem</a></li>
@@ -26,11 +26,11 @@
 
         <form method="post">
             <div class="form-group-row">
-                <div class="mx-auto">
+                <div class="col-4 mx-auto">
                     <label class="col-form-label font-weight-bold" for="pickUp">Pick-up</label>
                     <input class="form-control" id="pickUp" name="pickUp" type="text"/>
                 </div>
-                <div class="mx-auto">
+                <div class="col-4 mx-auto">
                     <label class="col-form-label font-weight-bold" for="dropOff">Drop-off</label>
                     <input class="form-control" id="dropOff" name="dropOff" type="text"/>
                 </div>
