@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/*
+    Singleton klasse som har ansvar for at returnere en database forbindelse
+ */
+
 public class DatabaseConnectionManager {
     //singleton af DCM
     private static DatabaseConnectionManager instance;

@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Klasse der håndterer CRUD operationer samt generel tilgang til databasen.
+ */
+
 public class BookingRepositoryImpl implements IBookingRepository {
     private Connection conn;
 
@@ -130,7 +134,10 @@ public class BookingRepositoryImpl implements IBookingRepository {
     }
 
     /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
-    som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden
+    som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden.
+
+    Metoden har til ansvar at returnere det sidste row i bookings table fra databasen.
+    Er nødvendig for getLast() metoden i BookingService klassen
  */
     public Booking readLast() {
         Booking bookingToReturn = new Booking();

@@ -12,6 +12,13 @@ public class CustomerServiceImpl implements ICustomerService {
 
     }
 
+    /*
+        Metoden har til ansvar at returnere et Customer objekt ud fra parametrene i metodens header.
+        Metoden bruges i BookingController klassen hvor parametrene indtastet i et view når en ny kunde
+        skal oprettes i forbindelse med en ny booking.
+
+        getLast() kaldes for at sætte id på objektet for at sørge for at id vil være det næste i følge databasen.
+     */
     public Customer generateCustomerFromCustomerForm(String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
         Customer customerToBeCreated = new Customer(firstName, lastName, phone, mail, zipCode, city, address);
         add(customerToBeCreated);
@@ -70,6 +77,11 @@ public class CustomerServiceImpl implements ICustomerService {
         return null;
     }
 
+    /*
+        Metoden returnerer et Customer objekt som er lavet ud fra det sidste i row i databasen.
+        Med andre ord den senest oprettede Customer.
+        Dette bruges i BookingController klassen når man opretter en ny customer i forbindelse med en booking.
+     */
     @Override
     public Customer getLast() {
         try {

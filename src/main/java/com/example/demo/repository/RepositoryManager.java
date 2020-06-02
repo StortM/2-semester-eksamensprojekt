@@ -8,6 +8,10 @@ public class RepositoryManager {
     private IBookingRepository bookingRepository;
     private ICustomerRepository customerRepository;
 
+    /*
+        Singleton klasse der har til ansvar at returnere et repository.
+     */
+
     private RepositoryManager() throws SQLException {
         autocamperRepository = new AutocamperRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());
         bookingRepository = new BookingRepositoryImpl(DatabaseConnectionManager.getInstance().getDatabaseConnection());

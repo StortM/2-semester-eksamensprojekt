@@ -4,6 +4,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+/*
+    POJO af booking
+ */
+
 public class Booking {
     private int id;
     private int autocamperId;

@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+/*
+    POJO af autocamper
+ */
+
 public class Autocamper {
     private int id;
     private int year;

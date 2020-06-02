@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+/*
+    POJO af customer
+ */
+
 public class Customer {
     private int id;
     private String firstName;

@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     //autoriserer alle requests ved antMatchers, admin page til ADMIN rolle osv. osv.
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 //Selvom authorities er defineret some ROLE_**** og det ikke er nedenfor, så er dette stadigvæk korrekt, da Spring tilføjer
                 //"ROLE_" som et prefix, når man specificerer roller i configure
@@ -61,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Denne er kun til testing og gør ingenting, men får blot programmet til at køre
     // Så kommer vu udenom hashing og sådan :)
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
+    public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 }

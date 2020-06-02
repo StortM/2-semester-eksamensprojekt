@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Klasse der håndterer CRUD operationer samt generel tilgang til databasen.
+ */
+
 public class CustomerRepositoryImpl implements ICustomerRepository {
     private Connection conn;
 
@@ -129,7 +133,10 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
     }
 
     /* Sætter resultset til at være TYPE_SCROLL_INSENSITIVE da resultset pr. default er TYPE_FORWARD_ONLY
-        som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden
+        som kun understøtter at cursoren bevæger sig 1 row ad gangen, hvilket ikke virker med last() metoden.
+
+        Metoden har til ansvar at returnere det sidste row i customers table fra databasen.
+        Er nødvendig for getLast() metoden i CustomerService klassen
      */
     public Customer readLast() {
         Customer customerToReturn = new Customer();

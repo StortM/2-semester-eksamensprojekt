@@ -82,6 +82,11 @@ public class BookingServiceImpl implements IBookingService {
         return null;
     }
 
+    /*
+        Metoden returnerer et Booking objekt som er lavet ud fra det sidste i row i databasen.
+        Med andre ord den seneste booking.
+        Dette bruges i BookingController klassen til at sætte ID for den nyoprettede booking.
+     */
     @Override
     public Booking getLast() {
         try {

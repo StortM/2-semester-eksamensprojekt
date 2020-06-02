@@ -62,6 +62,15 @@ public class AutocamperServiceImpl implements IAutocamperService {
         return null;
     }
 
+    /*
+        Metode som returnerer et map af autocampere som ikke er booket i en given periode.
+        Metoden returnerer et map og ikke en liste da det gjorde implementationen nemmere og bedre.
+        Med en liste som f.eks. en ArrayList vil det at fjerne autocampere ændre på autocamperens index
+        og der vil på den måde være et skel imellem autocamper objektets index i listen og det id der findes
+        i databasen. Derudover starter en liste fra index 0 hvilket heller ikke er repræsentativt for databasen.
+        Ved at gemme autocamper objekter i et map undgår vi disse problemer da en key i mappet,
+        med et givent autocamper id, ikke vil ændres når et Entry fjernes fra mappet.
+     */
     @Override
     public Map<Integer, Autocamper> getFilteredMapByPeriod(LocalDate periodStart, LocalDate periodEnd) {
         Map<Integer, Autocamper> autocamperMapToReturn;

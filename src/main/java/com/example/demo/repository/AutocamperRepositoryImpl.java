@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/*
+    Klasse der håndterer CRUD operationer samt generel tilgang til databasen.
+ */
+
 public class AutocamperRepositoryImpl implements IAutocamperRepository {
     private Connection conn;
 
@@ -133,6 +137,12 @@ public class AutocamperRepositoryImpl implements IAutocamperRepository {
         return autocamperList;
     }
 
+    /*
+        Metoden har til ansvar at læse alle autocampere fra databasen og returnere dem som et map.
+        Key i mappet er autocamperens id og value er den tilsvarende autocamper som objekt.
+
+        Er nødvendig for getFilteredMapByPeriod metoden i AutocamperService klassen.
+    */
     public Map<Integer, Autocamper> readAllAsMap() {
         Map<Integer, Autocamper> autocamperMap = new TreeMap<>();
 
