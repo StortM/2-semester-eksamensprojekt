@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Autocamper;
 import com.example.demo.model.Booking;
 import com.example.demo.repository.RepositoryManager;
 
@@ -8,17 +7,30 @@ import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+/*
+    Service klasse med ansvar for at udfører operationer relevante for en booking.
+    Dette gøres via klassens tilsvarende repository som står for kontakt med databasen.
+ */
 public class BookingServiceImpl implements IBookingService {
 
     public BookingServiceImpl() {
     }
 
+    /*
+        Udregner booking id for ny booking ved at finde nyeste booking row i databasen
+        og inkrementere id fra denne med 1.
+     */
     @Override
     public int calculateBookingId() {
 
         return getLast().getId() + 1;
     }
 
+    /*
+        Udregner totalpris for en booking.
+        Gør dette ved at finde ud af antallet af dage i booking objektets periode
+        og gange dette med bookingens tilknyttede autocampers pris pr. dag
+     */
     @Override
     public int getTotalPrice(Booking booking) {
         int priceDay = 0;

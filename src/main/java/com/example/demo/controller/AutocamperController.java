@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.repository.AutocamperRepositoryImpl;
-import com.example.demo.repository.DatabaseConnectionManager;
 import com.example.demo.service.AutocamperServiceImpl;
 import com.example.demo.service.IAutocamperService;
 import org.springframework.stereotype.Controller;

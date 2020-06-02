@@ -9,6 +9,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/*
+    Service klasse med ansvar for at udfører operationer relevante for en autocamper.
+    Dette gøres via klassens tilsvarende repository som står for kontakt med databasen.
+ */
 public class AutocamperServiceImpl implements IAutocamperService {
 
     public AutocamperServiceImpl() {
@@ -70,6 +74,10 @@ public class AutocamperServiceImpl implements IAutocamperService {
         i databasen. Derudover starter en liste fra index 0 hvilket heller ikke er repræsentativt for databasen.
         Ved at gemme autocamper objekter i et map undgår vi disse problemer da en key i mappet,
         med et givent autocamper id, ikke vil ændres når et Entry fjernes fra mappet.
+
+        Mappet instansieres som et TreeMap i BookingController.
+        Grunden til at vi har valgt TreeMap skyldes at keys Entries bliver sorteret efter keys
+        og da Integer klassen har en naturlig orden gør det at hver entry står i rækkefølge efter key fra lavest til størst.
      */
     @Override
     public Map<Integer, Autocamper> getFilteredMapByPeriod(LocalDate periodStart, LocalDate periodEnd) {
