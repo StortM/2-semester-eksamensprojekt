@@ -10,6 +10,7 @@ public class Autocamper {
     private String brand;
     private String model;
 
+    // Default constructor så vi kan oprette objekter til nye autocampere
     public Autocamper(){
 
     }

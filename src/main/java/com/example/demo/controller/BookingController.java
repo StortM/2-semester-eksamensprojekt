@@ -9,23 +9,35 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.TreeMap;
 
 /*
-    bookingBeingCreated og filteredAutocamperMap tilføjes som keys til
+    BookingController klassen håndter alt der har med bookinger at gøre.
+    Lige fra nye bookinger, hvis mappings har prefix /booking/new/
+    og det at kunne se en liste over nuværende bookinger i systemet.
+
+    Der er undervejs i klassen kommenteret hvad hver metode gør og hvilken del
+    af bookingprocessen den repræsenterer, for at give overblik.
+
+    En vigtig detalje er at @SessionAttributes benyttes til at gemme objektet
+    "bookingBeingCreated" som repræsenterer en ny booking og
+    "filteredAutocamperMap" som repræsenterer en liste af ledige autocampere,
+    i session. På den måde persister objekterne imellem metoder og
+    navigering imellem denne Controller og f.eks. CustomerController
+    som involveres når en eksisterende kunde skal kobles til en ny booking.
  */
+
+
 @SessionAttributes({"bookingBeingCreated", "filteredAutocamperMap"})
 @Controller
 public class BookingController {
 
-    // private IAutocamperRepository autocamperRepository;
     private IBookingService bookingService;
     private ICustomerService customerService;
     private IAutocamperService autocamperService;
 
-    public BookingController() throws SQLException {
+    public BookingController() {
         bookingService = new BookingServiceImpl();
         customerService = new CustomerServiceImpl();
         autocamperService = new AutocamperServiceImpl();
@@ -33,7 +45,7 @@ public class BookingController {
 
     /*
     Step 1: Fjern sessionAttributes for at "resette"
-            og starte bookingen med friske objekter uden data
+            og starte bookingen med friske objekter uden data.
      */
     @GetMapping("/booking/new")
     public String initializeBookingProcess(HttpSession httpSession) {
@@ -44,7 +56,7 @@ public class BookingController {
     }
 
     /*
-    Step 2: Kunden præsenteres for en form hvor der kan indtastes fra og til dato for bookingen
+    Step 2: Kunden præsenteres for en form hvor der kan indtastes fra og til dato for bookingen.
      */
     @GetMapping("/booking/new/date")
     public String displayChooseDateForm(Model model) {
@@ -56,14 +68,19 @@ public class BookingController {
     }
 
     /*
-    Step 2.1: Indtastede datoer gemmes i booking objektet fra sessionen.
+    Step 2.1: Booking objektet hentes via httpSession objektet.
+
+              Indtastede datoer gemmes i booking objektet fra sessionen.
               Filtreret map over ledige autocampers for den givne periode
               hentes ved hjælp fra servicelaget.
+
+              Datoer tages imod som strings da Spring ellers giver en exception
+              (nok pga. dato formatet). De bliver herefter parset til LocalDates
+              via LocalDate.parse() metoden
      */
     @PostMapping("/booking/new/date")
     public String processDateForm(@RequestParam String periodStart, @RequestParam String periodEnd, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         Booking bookingBeingCreated = (Booking) httpSession.getAttribute("bookingBeingCreated");
-        // Map<Integer, Autocamper> filteredAutocamperMap = (Map<Integer, Autocamper>) httpSession.getAttribute("filteredAutocamperMap");
 
         LocalDate periodStartAsLocalDate = LocalDate.parse(periodStart);
         LocalDate periodEndAsLocalDate = LocalDate.parse(periodEnd);
@@ -112,7 +129,7 @@ public class BookingController {
     /*
     Step 4: En form vises med mulighed for at indtaste kundeoplysninger,
             samt en knap til hvis man ønsker at tilknytte en eksisterende kunde.
-            Valg af eksisterende kunde er mappet til /booking/existingCustomer.
+            Valg af eksisterende kunde er mappet til /booking/new/customerExisting
      */
     @GetMapping("/booking/new/customer")
     public String displayCustomerForm(Model model) {
@@ -149,7 +166,7 @@ public class BookingController {
     /*
     Step 4.2: Bliver kaldt hvis man vælger at tilføje en eksisterende kunde til bookingen.
               Returnerer samme liste som /kunder/list og tilføjer "bookingInProgress" variablen med værdien "yes"
-              til modellen for at kommunikere med thymeleaf om hvilke knapper der skal loades in i viewet.
+              til modellen for at kommunikere med thymeleaf om hvilke knapper der skal loades ind i viewet.
      */
     @GetMapping("/booking/new/customerExisting")
     public String displayCustomerList(Model model) {
@@ -224,6 +241,8 @@ public class BookingController {
             der er blevet tilknyttet objektet.
             Bookingen gemmes via servicelaget til databasen
             og kan nu hentes frem igen på et senere tidspunkt.
+
+            sessionStatus.setComplete() kaldes for at tillade at SessionAttributes kan garbage collectes
      */
     @GetMapping("/booking/new/complete")
     public String displayBookingCompleted(Model model, HttpSession httpSession, SessionStatus sessionStatus) {

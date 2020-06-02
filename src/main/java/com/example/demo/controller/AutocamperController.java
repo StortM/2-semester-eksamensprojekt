@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.sql.SQLException;
 
+/*
+    Controller der håndter alt med autocampere at gøre
+ */
+
 @Controller
 public class AutocamperController {
     IAutocamperService autocamperService;
 
-    public AutocamperController() throws SQLException {
+    public AutocamperController() {
         autocamperService = new AutocamperServiceImpl();
     }
 

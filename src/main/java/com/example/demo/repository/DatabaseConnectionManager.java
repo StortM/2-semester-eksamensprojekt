@@ -26,6 +26,7 @@ public class DatabaseConnectionManager {
         return instance;
     }
 
+    // Returnerer et Connection objekt ud fra username, password og url i resources/application.properties filen
     public Connection getDatabaseConnection() throws SQLException {
         Properties prop = new Properties();
         try {
@@ -36,7 +37,6 @@ public class DatabaseConnectionManager {
             this.url = prop.getProperty("spring.datasource.url");
         }
         catch(FileNotFoundException e){
-
             System.out.println("File could not be found");
             e.printStackTrace();
         }

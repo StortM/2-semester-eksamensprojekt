@@ -16,8 +16,9 @@ public class Booking {
     private String pickUp;
     private int priceTotal;
 
+    // Default constructor så vi kan oprette objekter til nye bookinger
     public Booking() {
-        // default empty
+
     }
 
     public Booking(int id, int autocamperId, int customerId, LocalDate periodStart, LocalDate periodEnd, String dropOff, String pickUp, int priceTotal) {

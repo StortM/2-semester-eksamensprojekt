@@ -10,8 +10,9 @@ public class Customer {
     private String city;
     private String address;
 
-    public Customer() {
-        // default empty
+    // Default constructor så vi kan oprette objekter til nye kunder
+   public Customer() {
+
     }
 
     public Customer(int id, String firstName, String lastName, int phone, String mail, int zipCode, String city, String address) {
