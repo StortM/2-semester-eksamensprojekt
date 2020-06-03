@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 /*
     POJO af customer
+
+    Hovedansvarlig: Mads Christensen
  */
 
 public class Customer {

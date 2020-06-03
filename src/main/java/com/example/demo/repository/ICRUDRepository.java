@@ -7,6 +7,8 @@ import java.util.List;
      Det giver mulighed for mere specialiserede metoder for hvert repository,
      men sørger for at de stadig har de samme basale funktioner,
      og mulighed for nemmere at udskifte implementation hvis det skulle være nødvendigt.
+
+     Hovedansvarlig: Michael Fuglø
  */
 public interface ICRUDRepository<T> {
      void create(T t);

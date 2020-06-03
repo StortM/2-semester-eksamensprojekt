@@ -9,6 +9,8 @@ import java.util.Properties;
 
 /*
     Singleton klasse som har ansvar for at returnere en database forbindelse
+
+    Hovedansvarlig: Mads Christensen
  */
 
 public class DatabaseConnectionManager {

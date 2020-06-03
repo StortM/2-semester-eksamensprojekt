@@ -13,6 +13,8 @@ import java.util.List;
 
      Det skyldes at det virkede mere brugervenligt på denne måde, da det
      efterligner metodenavne fra f.eks. List interfacet.
+
+     Hovedansvarlig: Michael Fuglø
  */
 public interface IService<T> {
     void add(T t);

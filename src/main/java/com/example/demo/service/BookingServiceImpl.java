@@ -30,6 +30,8 @@ public class BookingServiceImpl implements IBookingService {
         Udregner totalpris for en booking.
         Gør dette ved at finde ud af antallet af dage i booking objektets periode
         og gange dette med bookingens tilknyttede autocampers pris pr. dag
+
+        Hovedansvarlig: Mads Christensen
      */
     @Override
     public int getTotalPrice(Booking booking) {

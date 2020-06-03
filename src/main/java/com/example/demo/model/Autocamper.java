@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 /*
     POJO af autocamper
+
+    Hovedansvarlig: Mads Christensen
  */
 
 public class Autocamper {

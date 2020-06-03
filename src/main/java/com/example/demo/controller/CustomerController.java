@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /*
     Controller der håndterer kundedelen af applikationen.
+
+    Hovedansvarlig: Mads Christensen
  */
 
 @Controller

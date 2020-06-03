@@ -10,6 +10,8 @@ import java.util.*;
 
 /*
     Klasse der håndterer CRUD operationer samt generel tilgang til databasen.
+
+    Hovedansvarlig: Michael Fuglø
  */
 
 public class AutocamperRepositoryImpl implements IAutocamperRepository {
@@ -18,7 +20,6 @@ public class AutocamperRepositoryImpl implements IAutocamperRepository {
     public AutocamperRepositoryImpl(Connection conn){
         this.conn = conn;
     }
-
 
     public Autocamper read(int id){
         Autocamper objectToReturn = new Autocamper();

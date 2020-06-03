@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.sql.SQLException;
-
 /*
     Controller der håndter alt med autocampere at gøre
+
+    Hovedansvarlig: Mads Christensen
  */
 
 @Controller

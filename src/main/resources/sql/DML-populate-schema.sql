@@ -1,14 +1,5 @@
 USE nordic_motorhome_rental;
 
-SELECT * FROM departments;
-SELECT * FROM users;
-SELECT * FROM authorities;
-SELECT * FROM employees;
-SELECT * FROM accessories;
-SELECT * FROM autocampers;
-SELECT * FROM bookings;
-SELECT * FROM autocamper_types;
-
 INSERT INTO departments
 (id, name)
 VALUES
@@ -126,7 +117,6 @@ VALUES
 (DEFAULT, 4, 1, "2020-05-05", "2020-05-15", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
 (DEFAULT, 5, 1, "2020-05-01", "2020-05-03", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
 (DEFAULT, 5, 1, "2020-05-01", "2020-05-03", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
-(DEFAULT, 6, 1, "2020-05-01", "2020-05-10", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
 (DEFAULT, 6, 1, "2020-05-01", "2020-05-10", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
 (DEFAULT, 7, 1, "2020-05-01", "2020-05-30", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),
 (DEFAULT, 8, 1, "2020-05-06", "2020-05-14", "Kastrup Lufthavn", "Kastrup Lufthavn", 5000),

@@ -9,6 +9,8 @@ import java.util.List;
 
 /*
     Klasse der håndterer CRUD operationer samt generel tilgang til databasen.
+
+    Hovedansvarlig: Michael Fuglø
  */
 
 public class BookingRepositoryImpl implements IBookingRepository {

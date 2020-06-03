@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
     home er altså en lukket del der kræver login og login siden er "index" siden for
     sessions uden en authenticated bruger tilknyttet.
+
+    Hovedansvarlig: Michael Fuglø
  */
 
 @Controller

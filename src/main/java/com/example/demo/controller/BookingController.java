@@ -26,6 +26,8 @@ import java.util.TreeMap;
     i session. På den måde persister objekterne imellem metoder og
     navigering imellem denne Controller og f.eks. CustomerController
     som involveres når en eksisterende kunde skal kobles til en ny booking.
+
+    Hovedansvarlig: Michael Fuglø & Mads Christensen
  */
 
 

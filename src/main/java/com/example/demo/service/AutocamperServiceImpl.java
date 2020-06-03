@@ -12,6 +12,8 @@ import java.util.Map;
 /*
     Service klasse med ansvar for at udfører operationer relevante for en autocamper.
     Dette gøres via klassens tilsvarende repository som står for kontakt med databasen.
+
+    Hovedansvarlig: Mads Christensen
  */
 public class AutocamperServiceImpl implements IAutocamperService {
 
@@ -91,8 +93,8 @@ public class AutocamperServiceImpl implements IAutocamperService {
             for(int i = 1; i <= bookingList.size(); i++) {
                 Booking currentBookingFromDatabase = bookingList.get(i - 1);
 
-                if((periodStart.isBefore(currentBookingFromDatabase.getPeriodEnd())
-                        && periodEnd.isAfter(currentBookingFromDatabase.getPeriodStart()))) {
+                if((periodStart.isBefore(currentBookingFromDatabase.getPeriodEnd().plusDays(1))
+                        && periodEnd.plusDays(1).isAfter(currentBookingFromDatabase.getPeriodStart()))) {
 
                     autocamperMapToReturn.remove(currentBookingFromDatabase.getAutocamperId());
                 }

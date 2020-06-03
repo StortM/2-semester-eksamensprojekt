@@ -13,6 +13,8 @@ import javax.sql.DataSource;
 
 /*
     Klasse med ansvar for at konfigurere Spring Security
+
+    Hovedansvarlig: Michael Fuglø
  */
 
 @EnableWebSecurity

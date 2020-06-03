@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 /*
     POJO af booking
+
+    Hovedansvarlig: Michael Fuglø
  */
 
 public class Booking {

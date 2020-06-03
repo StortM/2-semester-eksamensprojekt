@@ -9,6 +9,8 @@ import java.util.List;
 /*
     Service klasse med ansvar for at udfører operationer relevante for en customer.
     Dette gøres via klassens tilsvarende repository som står for kontakt med databasen.
+
+    Hovedansvarlig: Mads Christensen
  */
 public class CustomerServiceImpl implements ICustomerService {
 
