@@ -9,4 +9,4 @@
 <li>Du burde nu kunne tilgå applikationen via din browser på addressen "localhost:8080"</li>
 </ol>
 
-Bemærk at fejlhåndtering ikke er implementeret og at det at oprette en booking tager udgangspunkt i et main success scenario hvor alle input indtastes efter hensigten. Eksempelvis vil et for langt telefonnummer under oprettelse af ny kunde resulterer i en expection da int datatypens max værdi overskrides.
+Bemærk at fejlhåndtering ikke er implementeret og at det at oprette en booking tager udgangspunkt i et main success scenario hvor alle input indtastes efter hensigten. Eksempelvis vil et for langt telefonnummer under oprettelse af ny kunde resulterer i en exception da int datatypens max værdi overskrides.
