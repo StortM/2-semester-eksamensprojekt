@@ -1,7 +1,7 @@
 # 2-semester-eksamensprojekt
 <b>Kørselsvejledning</b>
 <ol>
-<li>Peg Spring til din lokale MySQL server ved at navigere til resources og tilføje username og password til <b>application.properties</b>. </li>
+<li>Peg Spring til din lokale MySQL server ved at navigere til resources og tilføje username og password til <code>application.properties</code>. </li>
   <li>Opsæt databasen ved at navigere til resources/sql og køre <b>DDL-create-schema.sql</b> og indsæt testdata ved at køre <b>DML-populate-schema.sql</b> i den rækkefølge. Brug eventuelt MySQL Workbench.</li>
 <li>Vi anbefaler at åbne projektet i IntelliJ IDEA.</li>
 <li>Ved opstart af projektet er det vigtigt at sørge for at Maven har importeret de nødvendige dependencies som kan findes i <b>pom.xml</b> filen. I IntelliJ sker dette ved at en popup nederst i højre hjørne spørger om du vil auto-importe de fundne dependencies.</li>
