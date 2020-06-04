@@ -11,4 +11,4 @@
 
 Bemærk at fejlhåndtering ikke er implementeret og at det at oprette en booking tager udgangspunkt i et main success scenario hvor alle input indtastes efter hensigten. Eksempelvis vil et for langt telefonnummer under oprettelse af ny kunde resulterer i en exception da int datatypens max værdi overskrides.
 
-<b>OBS</b><i>Er du i tvivl om hvad du skal logge ind med kan du kigge i <code>DML-populate-schema.sql</code> filen eller logge ind med username "Ejer1" og password "ejer1".</i>
+<b>OBS: </b><i>Er du i tvivl om hvad du skal logge ind med kan du kigge i <code>DML-populate-schema.sql</code> filen eller logge ind med username "Ejer1" og password "ejer1".</i>
